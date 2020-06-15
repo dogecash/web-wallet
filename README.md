@@ -5,7 +5,8 @@
 ##### Dev Repo : https://github.com/Luke-Larsen/DogeCashWebWallet
 
 #### BETA **_PROCEED WITH CAUTION, DO STORE LARGE AMOUNTS OF FUNDS_**
-Stable live version at https://wallet.dogec.io (may not have all features mentioned here)
+live version at https://wallet.dogec.io
+
 ### Installation
 To use this web wallet locally click the clone or download button, then chose download as a zip. Unzip the file. Once it is unzipped, open the index.html file in your favorite **_MODERN_** browser. In order to generate new address you must change the debug setting to false, This will generate secure keys by way of window.crypto. There are some cases where this may not work properly make sure you are using a modern browser and that window.crypto works with your browser. Otherwise the generation may not be secure.
 ### USE
