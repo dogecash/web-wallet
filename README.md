@@ -1,8 +1,8 @@
 # DogeCashWebWallet
 ## Js based wallet for DogeCash
 
-#### DEV REPO 
-##### PRODUCTION Repo : https://github.com/dogecash/dogecash-web-wallet
+#### PRODUCTION REPO 
+##### Dev Repo : https://github.com/Luke-Larsen/DogeCashWebWallet
 
 #### BETA **_PROCEED WITH CAUTION, DO STORE LARGE AMOUNTS OF FUNDS_**
 live version at https://wallet.dogec.io
@@ -21,7 +21,7 @@ The current setup allows for users to generate one private key and one public ke
 **Warning** _in the current state do not use this if you have to have more then 1000 input transactions. In that case it would be better to import your wallet to a software wallet or wait for an update. A small transaction was recently sent using this so it does work, but be cautious as this is still in beta_
 
 Simple transactions require you to have networking enabled (cycle the toggle if its not on) in order to connect to a explorer. This is required because simple transactions do all of the heavy lifting for you.
-To run a simple transaction go to the transaction tab, then click load transactions (make sure that you have imported or generated a wallet otherwise it won't work.). Then simple put in the wallet address you want to send the coins to and the amount everything else will be calculated for you(the change address and fees). You will then see the whole signed transaction displayed. The current system requires you to manually put this into either a explorer, or local client, to send (this will be change on the next update).
+To run a simple transaction go to the transaction tab, then click load transactions (make sure that you have imported or generated a wallet otherwise it won't work.). Then simple put in the wallet address you want to send the coins to and the amount, everything else will be calculated for you (for example, the change address and fees). You will then see the whole signed transaction displayed. You can check that this transaction is what you want by taking the signed transaction and putting in into a software wallet with the command decoderawtransaction. If you feel comfortable with it feel free to send it via explorer or by pressing the button on the site.
 
 ##### Advanced Transaction
 *The current setup only allows one input transaction and two output transactions if you need more inputs use the simple transaction for now. This will be changed in future updates.*
@@ -33,7 +33,7 @@ This show users what the explorer see in association with the public key
 
 #### SETTINGS TAB
 ##### Explorer
-_Note for devs if you want this to connect to your explorer you must set the CORS header to all otherwise local users won't be able to connect to your explorer_
+_Note for devs if you want this to connect to your explorer you must set the CORS header to all, otherwise local users won't be able to connect to your explorer_
 
 This is where you can change the explorer this currently is only set up for explorer.dogec.io which is the main current explorer. It is best to currently not mess with this setting as it will be developed more in the future.
 
@@ -45,3 +45,4 @@ Debug mode sets some things mainly for testing do not use this if you are using 
 This turns on and off the networking functions of the script. If you truly want privacy and security run this on a offline computer but this should be reasonably secure. With this turned off the script doesn't have access to any networking parts meaning anything that connects to a explorer or outside server doesn't work.
 
 #### BETA **_PROCEED WITH CAUTION, DO STORE LARGE AMOUNTS OF FUNDS_**
+
