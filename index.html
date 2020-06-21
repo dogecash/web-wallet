@@ -14,23 +14,25 @@
   <source src="assets/woof.mp3" type="audio/mpeg">
   </audio>
   <body>
-      <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+  <div id="page-container">
+    <div id="content-wrap">
+      <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
           <img class="navbar-brand" src='assets/doge.png' onclick="document.getElementById('woof').play();" alt="Doge" style='vertical-align: middle;width:40px;display:inline'>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse" id="navbarNav" >
+          <ul class="navbar-nav mr-auto" style='background-color:#ecd3af;filter: drop-shadow(5px 5px 3px #323232);'>
             <li class="nav-item"><a id='start' class="nav-link" onclick="openTab(event, 'home')">Intro</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="openTab(event, 'keypair')">Wallets</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="openTab(event, 'Transaction')">Create Transaction</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="startNetworkTest();openTab(event, 'WalletData');">Network Data</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="openTab(event, 'Settings');">Settings</a></li>
+            <li class="nav-item"><a class="nav-link" style='color:black;' onclick="openTab(event, 'keypair')">Wallets</a></li>
+            <li class="nav-item"><a class="nav-link" style='color:black;' onclick="openTab(event, 'Transaction')">Create Transaction</a></li>
+            <li class="nav-item"><a class="nav-link" style='color:black;' onclick="startNetworkTest();openTab(event, 'WalletData');">Network Data</a></li>
+            <li class="nav-item"><a class="nav-link" style='color:black;' onclick="openTab(event, 'Settings');">Settings</a></li>
           </ul>
         </div>
       </nav>
     <br>
-    <div style='display:none;background-color:red' id='outdated'>Warning your version is outdated please update to the newest stable version at the <a href='https://github.com/Luke-Larsen/DogeCashWebWallet/releases'>Github</a></div>
+    <div style='display:none;background-color:red;margin-bottom:15px;' id='outdated'>Warning your version is outdated please update to the newest stable version at the <a href='https://github.com/dogecash/dogecash-web-wallet/releases'>Dogecash Github</a></div>
 
     <div class="container-fluid">
     <div class="row no-gutters">
@@ -50,6 +52,11 @@
               Make sure when you run this wallet to run it from a trusted source such as dogec.io or download it from the Github and run it on your computer.
               We tryed to make the user interface as friendly as possible but in the event that you don't understand something feel free to check out the tutorials at the github
               or create a issue on that github and we will get to it as fast as possible.
+          </h5>
+          <h4> Generate Paper wallets </h4>
+          <h5 style='text-indent: 30px;'>
+            This web wallet functions much like a paper wallet generator, but with features most normal wallets have. You can also generate transactions offline!
+            Head over to the wallet tab and generate your first wallet. Make sure to keep the key secure! otherwise you may lose all your coins.
           </h5>
         </div>
         <div id="keypair" class="tabcontent">
@@ -76,9 +83,10 @@
           <div id="PublicQR"></div>
         </div>
         <div id="Transaction" class="tabcontent">
+          <div id='errorNotice'></div>
           <div class='pullDown' style='clear:both;'>
-            <div onclick='toggleDropDown("loadSimpleTransactions")'>Create Simple (Automated) Transactions<span style='float:right;'>▼</span></div>
-            <div id='loadSimpleTransactions'>
+            <div onclick='toggleDropDown("loadSimpleTransactions")'>Create Simple Transactions<span style='float:right;'>▼</span></div>
+            <div id='loadSimpleTransactions'style='display:none'>
               In order to use simple transactions you must first load your wallet
               <br>
               <button onclick='loadUnspendInputs()'>Load Wallet</button>
@@ -142,7 +150,7 @@
                 <option value="custom">custom (In Development)</option>
               </select>
               <br>
-              <input type="submit">
+              <input type="submit" style='background-color:#243646;color:#dddfe2;'>
           </form>
           <br>
           <button type="submit" onclick='toggleDebug()'>Toggle Debug mode</button>
@@ -159,18 +167,22 @@
                 <div class='pullDown' style='clear:both;'>
                   <div onclick='toggleDropDown("Transactions")'>Transactions:<span id='TransactionNumber'>▼</span><span style='float:right;'>▼</span></div>
                   <div style='background-color:#D0D0D0; width:100%'><span style='display:none;' id='Transactions'></span></div>
+                  <br>
+                  <br>
                 </div>
               </div>
               <!--Right -->
-              <div style='float:right;'>
-                Address Response
+              <div id='NetworkDataAddrs'>
+                <span style='margin-left:1px;'>Address Response</span>
                 <hr>
-                <span id='addrStr'></span><br>
-                <span id='addrStrQR'></span>
+                <span id='addrStr' style='margin-left:1px;'></span><br>
+                <span id='addrStrQR' style='margin-left:1px;'></span>
               </div>
               <div class='pullDown' style='clear:both;'>
                 <div onclick='toggleDropDown("NetworkingJson")'>Pure json:<span style='float:right;'>▼</span></div>
-                <div style='background-color:#D0D0D0; width:100%'><textarea rows="15" cols="50" id="NetworkingJson" style='display:none;font-size:1vw;width:99%;overflow:hidden;background-color:#D0D0D0;'></textarea></div>
+                <div style='background-color:#D0D0D0; width:100%'>
+                  <textarea rows="15" cols="50" id="NetworkingJson" style='display:none;font-size:4vw;width:99%;overflow:hidden;background-color:#D0D0D0;'></textarea>
+                </div>
               </div>
             </div>
         </div>
@@ -179,9 +191,11 @@
       </div>
     </div>
   </div>
+</div>
     <div class="footer">
       <div style='display:inline;' id='dcfooter'></div>
     </div>
+  </div>
     <script type="text/javascript" src="scripts/libs/crypto-min.js"></script>
      <script type="text/javascript" src="scripts/libs/crypto-sha256.js"></script>
      <script type="text/javascript" src="scripts/libs/crypto-sha256-hmac.js"></script>

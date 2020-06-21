@@ -45,3 +45,4 @@ Debug mode sets some things mainly for testing do not use this if you are using 
 This turns on and off the networking functions of the script. If you truly want privacy and security run this on a offline computer but this should be reasonably secure. With this turned off the script doesn't have access to any networking parts meaning anything that connects to a explorer or outside server doesn't work.
 
 #### BETA **_PROCEED WITH CAUTION, DO STORE LARGE AMOUNTS OF FUNDS_**
+

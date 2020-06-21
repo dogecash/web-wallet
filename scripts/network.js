@@ -1,6 +1,6 @@
 if(networkEnabled){
   var url = 'https://' + explorer
-  var githubRepo = 'https://api.github.com/repos/Luke-Larsen/DogeCashWebWallet/releases';
+  var githubRepo = 'https://api.github.com/repos/dogecash/dogecash-web-wallet/releases';
   var checkPubKey = function(){
     // Create a request variable and assign a new XMLHttpRequest object to it.
     var request = new XMLHttpRequest()
@@ -66,24 +66,25 @@ if(networkEnabled){
       data = JSON.parse(this.response)
       if(JSON.stringify(data) === '[]'){
         console.log('No unspent Transactions');
+        document.getElementById("errorNotice").innerHTML = '<h4>Error:</h4><h5>It seems there are no unspent inputs associated with your wallet. This means you have no funds! D:</h5>';
       }else{
         amountOfTransactions = JSON.stringify(data['length'])
         var dataTransactions = JSON.stringify(data['0']['txid']);
-        if(amountOfTransactions <= 1000){
-          for(i = 0; i < amountOfTransactions; i++) {
-            if(i == 0){
-              balance = parseFloat(Number(data[i]['value'])/100000000);
-            }else{
-              balance = parseFloat(balance) + parseFloat(Number(data[i]['value'])/100000000);
-            }
-            var txid = JSON.stringify(data[i]['txid']).replace(/"/g,"");
-            var index = JSON.stringify(data[i]['vout']);
-            getScriptData(txid,index)
+          if(amountOfTransactions <= 1000){
+            for(i = 0; i < amountOfTransactions; i++) {
+              if(i == 0){
+                balance = parseFloat(Number(data[i]['value'])/100000000);
+              }else{
+                balance = parseFloat(balance) + parseFloat(Number(data[i]['value'])/100000000);
+              }
+              var txid = JSON.stringify(data[i]['txid']).replace(/"/g,"");
+              var index = JSON.stringify(data[i]['vout']);
+              getScriptData(txid,index)
             }
           }else{
             //Temporary message for when there are alot of inputs
             //Probably use change all of this to using websockets will work better
-            document.getElementById("NetworkingJson").innerHTML = '<h3 style="color:red">We are sorry but this address has over 1k inputs. In this version we do not support this. Please import your private key to a desktop wallet or use another option';
+            document.getElementById("errorNotice").innerHTML = '<h4>Error:</h4><h5>We are sorry but this address has over 1k inputs. In this version we do not support this. Please import your private key to a desktop wallet or wait for an update</h5>';
           }
         }
         console.log('Total Balance:' + balance);
@@ -134,7 +135,7 @@ if(networkEnabled){
     request.open('GET', githubRepo, true)
     request.onload = function() {
       data = JSON.parse(this.response)
-      var currentReleaseVersion = (data[0]['tag_name']).replace("v","")
+      var currentReleaseVersion = (data[0]['tag_name']).replace("V","")
       if(parseFloat(currentReleaseVersion) > parseFloat(dogecashversion)){
         console.log("out of date");
         document.getElementById("outdated").style.display='block';
