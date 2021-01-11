@@ -83,11 +83,11 @@ var randArr = new Uint8Array(32) //create a typed array of 32 bytes (256 bits)
 if(debug){
     document.getElementById('Debug').innerHTML = "<b> DEBUG MODE </b>";
 }
-document.getElementById('dcfooter').innerHTML = '© 2020 DogeCash - All rights reserved. <br><a href="https://github.com/Luke-Larsen/DogeCashWebWallet">DogeCash webwallet version : '+dogecashversion +'</a>';
+document.getElementById('dcfooter').innerHTML = '© 2021 StakeCube - All rights reserved. <br><a href="https://github.com/JSKitty/scc-web3">SCC Web 3.0 - v'+wallet_version +'</a>';
 //Wallet Import
 importWallet= function(){
   if(walletAlreadyMade != 0){
-    var walletConfirm = window.confirm("Do you really want to import a new address? If you haven't saved the last private key the key will get lost forever and any funds with it.");
+    var walletConfirm = window.confirm("Do you really want to import a new address? If you haven't saved the last private key, the key will get LOST forever alongside ANY funds with it.");
   }else{
     walletConfirm = true;
   }

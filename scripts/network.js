@@ -136,7 +136,7 @@ if(networkEnabled){
     request.onload = function() {
       data = JSON.parse(this.response)
       var currentReleaseVersion = (data[0]['tag_name']).replace("V","")
-      if(parseFloat(currentReleaseVersion) > parseFloat(dogecashversion)){
+      if(parseFloat(currentReleaseVersion) > parseFloat(wallet_version)){
         console.log("out of date");
         document.getElementById("outdated").style.display='block';
       }
