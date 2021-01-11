@@ -3,8 +3,8 @@
 	var bitjs = window.bitjs = function () { };
 
 	/* public vars */
-	bitjs.pub = 0x1E;
-	bitjs.priv = 0x7A;
+	bitjs.pub = 0x7D;
+	bitjs.priv = 0xFD;
 	bitjs.compressed = true;
 
 	/* provide a privkey and return an WIF  */

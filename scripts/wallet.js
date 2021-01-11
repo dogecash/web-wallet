@@ -132,7 +132,7 @@ importWallet= function(){
     pubKeyHashing.update(publicKeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
     var pubKeyHashRipemd160 = byteToHexString(ripemd160(hexStringToByte(pubKeyHash))).toUpperCase()
-    var pubKeyHashNetwork = "1E"+pubKeyHashRipemd160
+    var pubKeyHashNetwork = "7D" + pubKeyHashRipemd160
     const pubKeyHashingS = new jsSHA("SHA-256", "HEX",{"numRounds" : 2});
     pubKeyHashingS.update(pubKeyHashNetwork);
     const pubKeyHashingSF = pubKeyHashingS.getHash("HEX").toUpperCase();
@@ -182,7 +182,7 @@ generateWallet = function() {
     }
     //Private Key Generation
     var privateKeyHex = byteToHexString(privateKeyBytes).toUpperCase()
-    var privateKeyAndVersion = "7A" + privateKeyHex + "01"
+    var privateKeyAndVersion = "FD" +  privateKeyHex + "01"
     const shaObj = new jsSHA("SHA-256", "HEX",{"numRounds" : 2});
     shaObj.update(privateKeyAndVersion);
     const hash = shaObj.getHash("HEX");
@@ -215,7 +215,7 @@ generateWallet = function() {
     pubKeyHashing.update(publicKeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
     var pubKeyHashRipemd160 = byteToHexString(ripemd160(hexStringToByte(pubKeyHash))).toUpperCase()
-    var pubKeyHashNetwork = "1E"+pubKeyHashRipemd160
+    var pubKeyHashNetwork = "7D" + pubKeyHashRipemd160
     const pubKeyHashingS = new jsSHA("SHA-256", "HEX",{"numRounds" : 2});
     pubKeyHashingS.update(pubKeyHashNetwork);
     const pubKeyHashingSF = pubKeyHashingS.getHash("HEX").toUpperCase();
@@ -266,13 +266,13 @@ generateWallet = function() {
     var typeNumber = 4;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData('dogecash:'+privateKeyWIF);
+    qr.addData('scc:' + privateKeyWIF);
     qr.make();
     document.getElementById('PrivateQR').innerHTML = qr.createImgTag();
     var typeNumber = 4;
     var errorCorrectionLevel = 'L';
     var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData('dogecash:'+pubKey);
+    qr.addData('scc:' + pubKey);
     qr.make();
     document.getElementById('PublicQR').innerHTML = qr.createImgTag();
   }

@@ -14,7 +14,7 @@ if(networkEnabled){
       var typeNumber = 4;
       var errorCorrectionLevel = 'L';
       var qr = qrcode(typeNumber, errorCorrectionLevel);
-      qr.addData('dogecash:'+ data['addrStr']);
+      qr.addData('scc:'+ data['addrStr']);
       qr.make();
       document.getElementById("addrStrQR").innerHTML = qr.createImgTag();
       document.getElementById("addrStr").innerHTML = data['addrStr'];
