@@ -88,7 +88,7 @@
 
 	bitjs.transaction = function() {
 		var btrx = {};
-		btrx.version = 1;
+		btrx.version = 2;
 		btrx.inputs = [];
 		btrx.outputs = [];
 		btrx.locktime = 0;
