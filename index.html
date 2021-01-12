@@ -19,14 +19,14 @@
   <div id="page-container">
     <div id="content-wrap">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
-        <img class="navbar-brand" src='assets/doge.png' onclick="document.getElementById('woof').play();" alt="Doge"
+        <img class="navbar-brand" src='assets/spinner.gif' onclick="document.getElementById('woof').play();" alt="StakeCube"
           style='vertical-align: middle;width:40px;display:inline'>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mr-auto" style='background-color:#ecd3af;filter: drop-shadow(5px 5px 3px #323232);'>
+          <ul class="navbar-nav mr-auto" style='background-color:#afd9ec;filter: drop-shadow(5px 5px 3px #323232);'>
             <li class="nav-item"><a id='start' class="nav-link" onclick="openTab(event, 'home')">Intro</a></li>
             <li class="nav-item"><a class="nav-link" style='color:black;'
                 onclick="openTab(event, 'keypair')">Wallets</a></li>
@@ -48,8 +48,8 @@
         <div class="row no-gutters">
           <div class='col-md-1'>
             <div style='float:center'>
-              <div id='Debug' style='color:#ffa500'></div>
-              <div id='Network' style='color:#ffa500'></div>
+              <div id='Debug' style='color:#00b7ff'></div>
+              <div id='Network' style='color:#00b7ff'></div>
             </div>
           </div>
           <div class='col-md-10'>
@@ -59,11 +59,11 @@
               </center>
               <h4> A wallet for everyone! </h4>
               <h5 style='text-indent: 30px;'>
-                This web wallet is designed to be able to run on any computer with a modern browser, from a Rasberry Pie
+                This web wallet is designed to be able to run on any computer with a modern browser, from a Raspberry Pi
                 to gaming desktop.
                 This wallet can do it! It has also been designed to generate wallets and create transactions without a
                 network connection.
-                Make sure when you run this wallet to run it from a trusted source such as dogec.io or download it from
+                Make sure when you run this wallet to run it from a trusted source such as stakecubecoin.net / stakecube.net or download it from
                 the Github and run it on your computer.
                 We tryed to make the user interface as friendly as possible but in the event that you don't understand
                 something feel free to check out the tutorials at the github
@@ -78,7 +78,7 @@
               </h5>
             </div>
             <div id="keypair" class="tabcontent">
-              <h3>Generate Dogec wallet</h3>
+              <h3>Generate SCC wallet</h3>
               <div id='importWallet' style='display:none;'>
                 <input type="text" id='privateKey' placeholder="Private Key">
                 <button onclick="importWallet()">Import wallet</button>
