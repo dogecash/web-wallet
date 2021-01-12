@@ -8,10 +8,10 @@
 	bitjs.compressed = true;
 
 	/* provide a privkey and return an WIF  */
-	bitjs.privkey2wif = function(h){
+	bitjs.privkey2wif = function(h) {
 		var r = Crypto.util.hexToBytes(h);
 
-		if(bitjs.compressed==true){
+		if (bitjs.compressed==true) {
 			r.push(0x01);
 		}
 
@@ -23,12 +23,12 @@
 	}
 
 	/* convert a wif key back to a private key */
-	bitjs.wif2privkey = function(wif){
+	bitjs.wif2privkey = function(wif) {
 		var compressed = false;
 		var decode = B58.decode(wif);
 		var key = decode.slice(0, decode.length-4);
 		key = key.slice(1, key.length);
-		if(key.length>=33 && key[key.length-1]==0x01){
+		if (key.length >=33 && key[key.length-1] == 0x01) {
 			key = key.slice(0, key.length-1);
 			compressed = true;
 		}
@@ -36,7 +36,7 @@
 	}
 
 	/* convert a wif to a pubkey */
-	bitjs.wif2pubkey = function(wif){
+	bitjs.wif2pubkey = function(wif) {
 		var compressed = bitjs.compressed;
 		var r = bitjs.wif2privkey(wif);
 		bitjs.compressed = r['compressed'];
@@ -46,13 +46,13 @@
 	}
 
 	/* convert a wif to a address */
-	bitjs.wif2address = function(wif){
+	bitjs.wif2address = function(wif) {
 		var r = bitjs.wif2pubkey(wif);
 		return {'address':bitjs.pubkey2address(r['pubkey']), 'compressed':r['compressed']};
 	}
 
 	/* generate a public key from a private key */
-	bitjs.newPubkey = function(hash){
+	bitjs.newPubkey = function(hash) {
 		var privateKeyBigInt = BigInteger.fromByteArrayUnsigned(Crypto.util.hexToBytes(hash));
 		var curve = EllipticCurve.getSECCurveByName("secp256k1");
 
@@ -64,9 +64,9 @@
 		publicKeyBytes = publicKeyBytes.concat(EllipticCurve.integerToBytes(y,32));
 		publicKeyBytes.unshift(0x04);
 
-		if(bitjs.compressed==true){
+		if (bitjs.compressed==true) {
 			var publicKeyBytesCompressed = EllipticCurve.integerToBytes(x,32)
-			if (y.isEven()){
+			if (y.isEven()) {
 				publicKeyBytesCompressed.unshift(0x02)
 			} else {
 				publicKeyBytesCompressed.unshift(0x03)
@@ -78,7 +78,7 @@
 	}
 
 	/* provide a public key and return address */
-	bitjs.pubkey2address = function(h, byte){
+	bitjs.pubkey2address = function(h, byte) {
 		var r = ripemd160(Crypto.SHA256(Crypto.util.hexToBytes(h), {asBytes: true}));
 		r.unshift(byte || bitjs.pub);
 		var hash = Crypto.SHA256(Crypto.SHA256(r, {asBytes: true}), {asBytes: true});
@@ -106,13 +106,13 @@
 			var o = {};
 			var buf = [];
 			var addrDecoded = btrx.addressDecode(address);
-			o.value = new BigInteger('' + Math.round((value*1) * 1e8), 10);
-			buf.push(118); //OP_DUP
-			buf.push(169);  //OP_HASH160
+			o.value = new BigInteger('' + Math.round((value * 1) * 1e8), 10);
+			buf.push(118); // OP_DUP
+			buf.push(169); // OP_HASH160
 			buf.push(addrDecoded.length);
 			buf = buf.concat(addrDecoded); // address in bytes
-			buf.push(136 ); //OP_EQUALVERIFY
-			buf.push(172); //  OP_CHECKSIG
+			buf.push(136); // OP_EQUALVERIFY
+			buf.push(172); // OP_CHECKSIG
 			o.script =   buf;
 			return this.outputs.push(o);
 		}
@@ -121,9 +121,9 @@
 		btrx.addressDecode = function(address) {
 			var bytes = B58.decode(address);
 			var front = bytes.slice(0, bytes.length-4);
-			var back = bytes.slice(bytes.length-4);
+			var back  = bytes.slice(bytes.length-4);
 			var checksum = Crypto.SHA256(Crypto.SHA256(front, {asBytes: true}), {asBytes: true}).slice(0, 4);
-			if (checksum+""  ==  back+"") {
+			if (checksum + "" == back + "") {
 				return front.slice(1);
 				}
 		}
@@ -136,60 +136,60 @@
 
 			/* black out all other ins, except this one */
 			for (var i = 0; i < clone.inputs.length; i++) {
-				if(index!=i){
+				if (index!=i) {
 					clone.inputs[i].script = [];
 				}
 			}
 
 
-			if((clone.inputs) && clone.inputs[index]){
+			if ((clone.inputs) && clone.inputs[index]) {
 
 				/* SIGHASH : For more info on sig hashs see https://en.bitcoin.it/wiki/OP_CHECKSIG
 					and https://bitcoin.org/en/developer-guide#signature-hash-type */
 
-				if(shType == 1){
+				if (shType == 1) {
 					//SIGHASH_ALL 0x01
 
-				} else if(shType == 2){
+				} else if (shType == 2) {
 					//SIGHASH_NONE 0x02
 					clone.outputs = [];
 					for (var i = 0; i < clone.inputs.length; i++) {
-						if(index!=i){
+						if (index!=i) {
 							clone.inputs[i].sequence = 0;
 						}
 					}
 
-				} else if(shType == 3){
+				} else if (shType == 3) {
 
 					//SIGHASH_SINGLE 0x03
 					clone.outputs.length = index + 1;
 
-					for(var i = 0; i < index; i++){
+					for(var i = 0; i < index; i++) {
 						clone.outputs[i].value = -1;
 						clone.outputs[i].script = [];
 					}
 
 					for (var i = 0; i < clone.inputs.length; i++) {
-						if(index!=i){
+						if (index!=i) {
 							clone.inputs[i].sequence = 0;
 						}
 					}
 
-				} else if (shType >= 128){
+				} else if (shType >= 128) {
 					//SIGHASH_ANYONECANPAY 0x80
 					clone.inputs = [clone.inputs[index]];
 
-					if(shType==129){
+					if (shType==129) {
 						// SIGHASH_ALL + SIGHASH_ANYONECANPAY
 
-					} else if(shType==130){
+					} else if (shType==130) {
 						// SIGHASH_NONE + SIGHASH_ANYONECANPAY
 						clone.outputs = [];
 
-					} else if(shType==131){
+					} else if (shType==131) {
 												// SIGHASH_SINGLE + SIGHASH_ANYONECANPAY
 						clone.outputs.length = index + 1;
-						for(var i = 0; i < index; i++){
+						for(var i = 0; i < index; i++) {
 							clone.outputs[i].value = -1;
 							clone.outputs[i].script = [];
 						}
@@ -207,7 +207,7 @@
 		}
 
 		/* generate a signature from a transaction hash */
-		btrx.transactionSig = function(index, wif, sigHashType, txhash){
+		btrx.transactionSig = function(index, wif, sigHashType, txhash) {
 
 			function serializeSig(r, s) {
 				var rBa = r.toByteArraySigned();
@@ -231,7 +231,7 @@
 			var shType = sigHashType || 1;
 			var hash = txhash || Crypto.util.hexToBytes(this.transactionHash(index, shType));
 
-			if(hash){
+			if (hash) {
 				var curve = EllipticCurve.getSECCurveByName("secp256k1");
 				var key = bitjs.wif2privkey(wif);
 				var priv = BigInteger.fromByteArrayUnsigned(Crypto.util.hexToBytes(key['privkey']));
@@ -325,7 +325,7 @@
 		};
 
     	/* sign a "standard" input */
-		btrx.signinput = function(index, wif, sigHashType){
+		btrx.signinput = function(index, wif, sigHashType) {
 			var key = bitjs.wif2pubkey(wif);
 			var shType = sigHashType || 1;
 			var signature = this.transactionSig(index, wif, shType);
@@ -388,7 +388,7 @@
 		if (typeof bytes === "undefined") bytes = 8;
 		if (bytes == 0) {
 			return [];
-		} else if (num == -1){
+		} else if (num == -1) {
 			return Crypto.util.hexToBytes("ffffffffffffffff");
 		} else {
 			return [num % 256].concat(bitjs.numToBytes(Math.floor(num / 256),bytes-1));
@@ -422,11 +422,11 @@
 
 	/* clone an object */
 	bitjs.clone = function(obj) {
-		if(obj == null || typeof(obj) != 'object') return obj;
+		if (obj == null || typeof(obj) != 'object') return obj;
 		var temp = new obj.constructor();
 
 		for(var key in obj) {
-			if(obj.hasOwnProperty(key)) {
+			if (obj.hasOwnProperty(key)) {
 				temp[key] = bitjs.clone(obj[key]);
 			}
 		}

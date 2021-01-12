@@ -13,25 +13,25 @@ var privateKeyForTransactions;
 var walletAlreadyMade = 0;
 var wallet_version = '1.02';
 var closeTheAlert = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-function setExplorer(){
+function setExplorer() {
   explorer = document.getElementById("explorer").value
   alert(`${explorer} has been set succesfully`);
 }
-function toggleDebug(){
-  if(debug){
+function toggleDebug() {
+  if (debug) {
     debug = false;
     document.getElementById('Debug').innerHTML = "";
-  }else{
+  } else {
     debug = true;
     document.getElementById('Debug').innerHTML = "<b> DEBUG MODE </b>" + closeTheAlert;
   }
   alert(`Debug set to ${debug}`);
 }
-function toggleNetwork(){
-  if(networkEnabled){
+function toggleNetwork() {
+  if (networkEnabled) {
     networkEnabled = false;
     document.getElementById('Network').innerHTML = "";
-  }else{
+  } else {
     networkEnabled = true;
     document.getElementById('Network').innerHTML = "<b> Network Enabled </b>" + closeTheAlert;
   }
