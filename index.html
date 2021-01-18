@@ -87,6 +87,11 @@
                 <button onclick="generateWallet()">Create A New Wallet</button>
               </div>
               <br>
+              <div id='generateVanityWallet'>
+                <input style="display:none;" type="text" id='prefix' placeholder="Address Prefix">
+                <button onclick="generateVanityWallet()">Create A Vanity Wallet</button>
+              </div>
+              <br>
               <button id='wToggle' onclick='toggleWallet()'>Access My Wallet</button>
               <br>
               <br>
@@ -244,6 +249,9 @@
   <script>
     function toggleWallet() {
       var toggle = document.getElementById("wToggle").innerHTML;
+      // Hide and Reset the Vanity address input
+      document.getElementById('prefix').value = "";
+      document.getElementById('prefix').style.display = 'none';
       if (toggle === "Access My Wallet") {
         document.getElementById("generateWallet").style.display = 'none';
         document.getElementById("importWallet").style.display = 'block';
@@ -252,6 +260,33 @@
         document.getElementById("generateWallet").style.display = 'block';
         document.getElementById("importWallet").style.display = 'none';
         document.getElementById("wToggle").innerHTML = "Access My Wallet";
+      }
+    }
+    async function generateVanityWallet() {
+      // Generate a vanity address with the given prefix
+      let strPrefix = document.getElementById('prefix');
+      if (strPrefix.value.length === 0) {
+        // No prefix, display the intro!
+        strPrefix.style.display = 'block';
+        document.getElementById('genKeyWarning').style.display = 'block';
+        document.getElementById('Privatelabel').style.display = 'block';
+        document.getElementById('Publiclabel').style.display = 'block';
+        document.getElementById('PrivateTxt').innerHTML = "---";
+        document.getElementById('PublicTxt').innerHTML = "---";
+      } else {
+        // We also don't want users to be mining addresses for years... so cap the letters to four until the generator is more optimized
+        if (strPrefix.value.length > 6) return alert("This is a long name! This would take a LONG time to find, please choose a shorter name!");
+        // Cache a lowercase equivilent for lower-entropy comparisons (a case-insensitive search is ALOT faster!) and strip accidental spaces
+        const nInsensitivePrefix = strPrefix.value.toLowerCase().replace(/ /g, "");
+        let attempts = 0;
+        // Begin the search, cap'n!!!
+        while (true) {
+          let nWallet = await generateWallet(nInsensitivePrefix);
+          // Check if the prefix matches the pubkey...
+          if (nWallet.vanity_match) return console.log("VANITY: Found an address after " + attempts + " attempts!");
+          // No match, bump the attempts
+          attempts++;
+        }
       }
     }
     function toggleDropDown(id) {

@@ -163,8 +163,8 @@ importWallet = function () {
 }
 
 //Wallet Generation
-generateWallet = function () {
-  if (walletAlreadyMade != 0) {
+generateWallet = async function (strPrefix = false) {
+  if (walletAlreadyMade != 0 && strPrefix === false) {
     var walletConfirm = window.confirm("Do you really want to generate a new address? If you haven't saved the last private key the key will get lost forever and any funds with it.");
   } else {
     walletConfirm = true;
@@ -224,7 +224,7 @@ generateWallet = function () {
     var pubKey = to_b58(hexStringToByte(pubKeyPreBase), MAP)
     publicKeyForNetwork = pubKey;
     //Debug Console
-    if (debug) {
+    if (debug && strPrefix === false) {
       console.log("Private Key")
       console.log(privateKeyHex)
       console.log("Private Key Plus Leading Digits")
@@ -256,24 +256,37 @@ generateWallet = function () {
       console.log('Public Key Base 64')
       console.log(pubKey)
     }
-    //Display Text
-    document.getElementById('genKeyWarning').style.display = 'block';
-    document.getElementById('Privatelabel').style.display = 'block';
-    document.getElementById('Publiclabel').style.display = 'block';
-    document.getElementById('PrivateTxt').innerHTML = privateKeyWIF;
-    document.getElementById('PublicTxt').innerHTML = pubKey;
-    //QR Codes
-    var typeNumber = 4;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData('scc:' + privateKeyWIF);
-    qr.make();
-    document.getElementById('PrivateQR').innerHTML = qr.createImgTag();
-    var typeNumber = 4;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData('scc:' + pubKey);
-    qr.make();
-    document.getElementById('PublicQR').innerHTML = qr.createImgTag();
+    // VANITY ONLY: During a search, we don't update the DOM until a match is found, or the renderer consumes a shitload of resources.
+    let nRet = {
+      pubkey: null,
+      privkey: null,
+      vanity_match: false
+    }
+    if (strPrefix === false || (strPrefix !== false && pubKey.toLowerCase().startsWith(strPrefix))) {
+      //Display Text
+      document.getElementById('genKeyWarning').style.display = 'block';
+      document.getElementById('Privatelabel').style.display = 'block';
+      document.getElementById('Publiclabel').style.display = 'block';
+      document.getElementById('PrivateTxt').innerHTML = privateKeyWIF;
+      document.getElementById('PublicTxt').innerHTML = pubKey;
+      //QR Codes
+      var typeNumber = 4;
+      var errorCorrectionLevel = 'L';
+      var qr = qrcode(typeNumber, errorCorrectionLevel);
+      qr.addData('scc:' + privateKeyWIF);
+      qr.make();
+      document.getElementById('PrivateQR').innerHTML = qr.createImgTag();
+      var typeNumber = 4;
+      var errorCorrectionLevel = 'L';
+      var qr = qrcode(typeNumber, errorCorrectionLevel);
+      qr.addData('scc:' + pubKey);
+      qr.make();
+      document.getElementById('PublicQR').innerHTML = qr.createImgTag();
+      // VANITY ONLY: If we reached here during a vanity search, we found our match!
+      nRet.pubkey       = pubKey;
+      nRet.privkey      = privateKeyWIF;
+      nRet.vanity_match = true;
+    }
+    return nRet;
   }
 }
