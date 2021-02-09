@@ -286,6 +286,9 @@ generateWallet = async function (strPrefix = false) {
       qr.make();
       document.getElementById('PublicQR').innerHTML = qr.createImgTag();
       document.getElementById('PublicQR').style.display = 'block';
+
+      
+      document.getElementById('guiWallet').style.display = 'block';
       viewPrivKey = false;
       // VANITY ONLY: If we reached here during a vanity search, we found our match!
       nRet.pubkey       = pubKey;
