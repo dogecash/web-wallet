@@ -14,7 +14,7 @@ if (networkEnabled) {
       var typeNumber = 4;
       var errorCorrectionLevel = 'L';
       var qr = qrcode(typeNumber, errorCorrectionLevel);
-      qr.addData('scc:' + data['addrStr']);
+      qr.addData('zenzo:' + data['addrStr']);
       qr.make();
       document.getElementById("addrStrQR").innerHTML = qr.createImgTag();
       document.getElementById("addrStr").innerHTML = data['addrStr'];
@@ -40,47 +40,25 @@ if (networkEnabled) {
     // Send request
     request.send()
   }
-  var getScriptData = function (txid, index) {
-    var request = new XMLHttpRequest()
-    if (amountOfTransactions <= 1000) {
-      request.open('GET', url + '/api/v2/tx/' + txid, true)//Simple queing fix
-    } else {
-      request.open('GET', url + '/api/v2/tx/' + txid, false)
-    }
-    request.onload = function (e) {
-      if (request.readyState === 4) {
-        if (request.status === 200) {
-          datar = JSON.parse(this.response)
-          var script = datar['vout'][index]['hex']
-          trx.addinput(txid, index, script)
-          console.log(trx);
-        }
-      }
-    }
-    request.send()
-  }
   var getUnspentTransactions = function () {
     var request = new XMLHttpRequest()
-    request.open('GET', url + '/api/v2/utxo/' + publicKeyForNetwork + '?confirmed=true', true)
+    request.open('GET', "https://chainz.cryptoid.info/znz/api.dws?q=unspent&active=" + publicKeyForNetwork + "&key=fb4fd0981734", true)
     request.onload = function () {
       data = JSON.parse(this.response)
-      if (JSON.stringify(data) === '[]') {
+      if (!data.unspent_outputs || data.unspent_outputs.length === 0) {
         console.log('No unspent Transactions');
         document.getElementById("errorNotice").innerHTML = '<h4>Error:</h4><h5>It seems there are no unspent inputs associated with your wallet. This means you have no funds! D:</h5>';
+        cachedUTXOs = [];
       } else {
-        amountOfTransactions = JSON.stringify(data['length'])
-        var dataTransactions = JSON.stringify(data['0']['txid']);
+        cachedUTXOs = [];
+        amountOfTransactions = data.unspent_outputs.length;
         if (amountOfTransactions <= 1000) {
           for (i = 0; i < amountOfTransactions; i++) {
-            if (i == 0) {
-              balance = parseFloat(Number(data[i]['value']) / 100000000);
-            } else {
-              balance = parseFloat(balance) + parseFloat(Number(data[i]['value']) / 100000000);
-            }
-            var txid = JSON.stringify(data[i]['txid']).replace(/"/g, "");
-            var index = JSON.stringify(data[i]['vout']);
-            getScriptData(txid, index)
+            cachedUTXOs.push(data.unspent_outputs[i]);
           }
+          // Update the GUI with the newly cached UTXO set
+          balance = getBalance();
+          document.getElementById("guiBalance").innerHTML = balance;
         } else {
           //Temporary message for when there are alot of inputs
           //Probably use change all of this to using websockets will work better
@@ -93,24 +71,20 @@ if (networkEnabled) {
   }
   var sendTransaction = function (hex) {
     if (typeof hex !== 'undefined') {
-      document.getElementById("sendIt").style.display = 'none';
       var request = new XMLHttpRequest()
-      request.open('GET', url + '/api/v2/sendtx/' + hex, true)
+      request.open('GET', 'https://arcade.zenzo.io/api/v1/web3/submittx?tx=' + hex, true)
       request.onload = function () {
-        data = JSON.parse(this.response)
-        if (typeof data['result'] !== 'undefined') {
-          console.log('Transaction sent tx:' + data['result']);
-          document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Transaction sent tx:' + data['result'] + '</h4>');
-          document.getElementById("sendIt").style.display = 'none';
+        data = this.response;
+        if (data.length === 64) {
+          console.log('Transaction sent! ' + data);
+          document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Transaction sent! ' + data + '</h4>');
           document.getElementById("loadSimpleTransactions").style.display = 'block';
           document.getElementById("simpleTransactions").style.display = 'none';
-          document.getElementById("simpleRawTx").innerHTML = '';
-          document.getElementById("HumanReadable").innerHTML = '';
           document.getElementById("address1s").innerHTML = '';
           document.getElementById("value1s").innerHTML = '';
         } else {
-          console.log('Error sending transaction:' + data['error']['message']);
-          document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Error sending transaction:' + data + "</h4>");
+          console.log('Error sending transaction: ' + data);
+          document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:red">Error sending transaction: ' + data + "</h4>");
         }
       }
 
@@ -120,7 +94,10 @@ if (networkEnabled) {
     }
   }
   var calculatefee = function (bytes) {
-    var request = new XMLHttpRequest()
+    // TEMPORARY: Hardcoded fee per-byte
+    fee = Number(((bytes * 2500) / 100000000).toFixed(8)); // 2500 ZEN/byte
+
+    /*var request = new XMLHttpRequest()
     request.open('GET', url + '/api/v1/estimatefee/10', false)
     request.onload = function () {
       data = JSON.parse(this.response)
@@ -128,7 +105,7 @@ if (networkEnabled) {
       console.log('current fee rate' + data['result']);
       fee = data['result'];
     }
-    request.send()
+    request.send()*/
   }
   var versionCheck = function () {
     var request = new XMLHttpRequest()

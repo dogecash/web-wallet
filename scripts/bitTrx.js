@@ -3,8 +3,8 @@
 	var bitjs = window.bitjs = function () { };
 
 	/* public vars */
-	bitjs.pub = 0x7D;
-	bitjs.priv = 0xFD;
+	bitjs.pub = 0x51;
+	bitjs.priv = 0xd7;
 	bitjs.compressed = true;
 
 	/* provide a privkey and return an WIF  */
@@ -88,7 +88,7 @@
 
 	bitjs.transaction = function() {
 		var btrx = {};
-		btrx.version = 2;
+		btrx.version = 1;
 		btrx.inputs = [];
 		btrx.outputs = [];
 		btrx.locktime = 0;

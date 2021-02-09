@@ -83,7 +83,7 @@ var randArr = new Uint8Array(32) //create a typed array of 32 bytes (256 bits)
 if (debug) {
   document.getElementById('Debug').innerHTML = "<b> DEBUG MODE </b>";
 }
-document.getElementById('dcfooter').innerHTML = '© 2021 StakeCube - All rights reserved. <br><a href="https://github.com/JSKitty/scc-web3">SCC Web 3.0 - v' + wallet_version + '</a>';
+document.getElementById('dcfooter').innerHTML = '© 2021 ZENZO Ecosystem - All rights reserved. <br><a href="https://github.com/ZENZO-Ecosystem/zenzo-web3">ZENZO Web 3.0 - v' + wallet_version + '</a>';
 //Wallet Import
 importWallet = function () {
   if (walletAlreadyMade != 0) {
@@ -132,7 +132,7 @@ importWallet = function () {
     pubKeyHashing.update(publicKeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
     var pubKeyHashRipemd160 = byteToHexString(ripemd160(hexStringToByte(pubKeyHash))).toUpperCase()
-    var pubKeyHashNetwork = "7D" + pubKeyHashRipemd160
+    var pubKeyHashNetwork = "51" + pubKeyHashRipemd160
     const pubKeyHashingS = new jsSHA("SHA-256", "HEX", { "numRounds": 2 });
     pubKeyHashingS.update(pubKeyHashNetwork);
     const pubKeyHashingSF = pubKeyHashingS.getHash("HEX").toUpperCase();
@@ -142,10 +142,10 @@ importWallet = function () {
     publicKeyForNetwork = pubKey;
     console.log(pubKey);
     //Display Text
-    document.getElementById('Privatelabel').style.display = 'block';
-    document.getElementById('Publiclabel').style.display = 'block';
+    document.getElementById('guiAddress').innerHTML = pubKey;
+    document.getElementById('guiWallet').style.display = 'block';
     document.getElementById('PrivateTxt').innerHTML = privateKeyWIF;
-    document.getElementById('PublicTxt').innerHTML = pubKey;
+    document.getElementById('guiAddress').innerHTML = pubKey;
     //QR Codes
     var typeNumber = 4;
     var errorCorrectionLevel = 'L';
@@ -159,6 +159,8 @@ importWallet = function () {
     qr.addData(pubKey);
     qr.make();
     document.getElementById('PublicQR').innerHTML = qr.createImgTag();
+    // Load UTXOs from explorer
+    getUnspentTransactions();
   }
 }
 
@@ -182,7 +184,7 @@ generateWallet = async function (strPrefix = false) {
     }
     //Private Key Generation
     var privateKeyHex = byteToHexString(privateKeyBytes).toUpperCase()
-    var privateKeyAndVersion = "FD" + privateKeyHex + "01"
+    var privateKeyAndVersion = "d7" + privateKeyHex + "01"
     const shaObj = new jsSHA("SHA-256", "HEX", { "numRounds": 2 });
     shaObj.update(privateKeyAndVersion);
     const hash = shaObj.getHash("HEX");
@@ -215,7 +217,7 @@ generateWallet = async function (strPrefix = false) {
     pubKeyHashing.update(publicKeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
     var pubKeyHashRipemd160 = byteToHexString(ripemd160(hexStringToByte(pubKeyHash))).toUpperCase()
-    var pubKeyHashNetwork = "7D" + pubKeyHashRipemd160
+    var pubKeyHashNetwork = "51" + pubKeyHashRipemd160
     const pubKeyHashingS = new jsSHA("SHA-256", "HEX", { "numRounds": 2 });
     pubKeyHashingS.update(pubKeyHashNetwork);
     const pubKeyHashingSF = pubKeyHashingS.getHash("HEX").toUpperCase();
@@ -265,23 +267,26 @@ generateWallet = async function (strPrefix = false) {
     if (strPrefix === false || (strPrefix !== false && pubKey.toLowerCase().startsWith(strPrefix))) {
       //Display Text
       document.getElementById('genKeyWarning').style.display = 'block';
-      document.getElementById('Privatelabel').style.display = 'block';
-      document.getElementById('Publiclabel').style.display = 'block';
       document.getElementById('PrivateTxt').innerHTML = privateKeyWIF;
-      document.getElementById('PublicTxt').innerHTML = pubKey;
+      document.getElementById('guiAddress').innerHTML = pubKey;
+      // New address... so there definitely won't be a balance
+      document.getElementById('guiBalance').innerHTML = "0";
       //QR Codes
       var typeNumber = 4;
       var errorCorrectionLevel = 'L';
       var qr = qrcode(typeNumber, errorCorrectionLevel);
-      qr.addData('scc:' + privateKeyWIF);
+      qr.addData('zenzo:' + privateKeyWIF);
       qr.make();
       document.getElementById('PrivateQR').innerHTML = qr.createImgTag();
+      document.getElementById('PrivateQR').style.display = 'none';
       var typeNumber = 4;
       var errorCorrectionLevel = 'L';
       var qr = qrcode(typeNumber, errorCorrectionLevel);
-      qr.addData('scc:' + pubKey);
+      qr.addData('zenzo:' + pubKey);
       qr.make();
       document.getElementById('PublicQR').innerHTML = qr.createImgTag();
+      document.getElementById('PublicQR').style.display = 'block';
+      viewPrivKey = false;
       // VANITY ONLY: If we reached here during a vanity search, we found our match!
       nRet.pubkey       = pubKey;
       nRet.privkey      = privateKeyWIF;
