@@ -20,13 +20,13 @@
   <div id="page-container">
     <div id="content-wrap">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
-        <img class="navbar-brand" src='assets/logo.png' alt="ZENZO"
+        <img class="navbar-brand noselect" src='assets/logo.png' alt="ZENZO"
           style='vertical-align: middle;width:150px;display:inline'>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse noselect" id="navbarNav">
           <ul class="navbar-nav mr-auto" style="cursor: pointer;">
             <li class="nav-item"><a id='start' class="nav-link tablinks" onclick="openTab(event, 'home')">Intro</a></li>
             <li class="nav-item"><a class="nav-link tablinks"
@@ -99,18 +99,18 @@
               <div id="guiWallet" style="display: none;">
                 <div id="banners" style="height: 160px; width: 100%; display: flex; flex-wrap: wrap; color: white; margin-bottom: 250px;">
                   <div class="graybox" style="height: 99%; width: 300px; background-color: #7070e3;">
-                    <h3 style="margin: 10px; position: relative; left: 165px;">Address</h3>
+                    <h3 class="noselect" style="margin: 10px; position: relative; left: 165px; cursor: default;">Address</h3>
                     <br>
                     <div>
-                      <canvas id="identicon" class="innerShadow" width="65" height="65" data-jdenticon-value="" style="background-color: white; border-color: white; border-width: 3px; border-style: solid; border-radius: 1000px; position: relative; top: -30px; left: 10px;"></canvas>
+                      <canvas id="identicon" class="innerShadow" width="65" height="65" data-jdenticon-value="" style="background-color: white; border-color: white; border-width: 3px; border-style: solid; border-radius: 1000px; position: relative; top: -30px; left: 15px;"></canvas>
                       <b id="guiAddress" style="line-break: anywhere; width: 60%; display: inline-block; right: -30px; position: relative; font-size: smaller; bottom: 50px; word-break: break-all; font-family: monospace; font-weight: 300;">---</b>
                     </div>
                   </div>
                   <div class="graybox" style="height: 99%; width: 300px; background-color: #5a78f0;">
-                    <h3 style="margin: 10px; position: relative; left: 135px;">Balance &nbsp;&nbsp;<span id="balanceReload" class=reload onclick="refreshChainData()">&#x21bb;</span></h3>
+                    <h3 class="noselect" style="margin: 10px; position: relative; left: 135px; cursor: default;">Balance &nbsp;&nbsp;<span id="balanceReload" class="reload noselect" onclick="refreshChainData()">&#x21bb;</span></h3>
                     <div>
-                      <div style="display: inline-block; position: relative; width: 65px; height: 65px; left: 10px; bottom: -8px; border-style: solid; border-radius: 1000px; border-width: 3px; background-size: cover; background-image: url(assets/logo-circle.png);"></div>
-                      <p style="display: inline-block; width: 50%; position: relative; right: -65px; bottom: 19px; font-size: x-large;"><b id="guiBalance">---</b> ZNZ</p>
+                      <div style="display: inline-block; position: relative; width: 65px; height: 65px; left: 30px; bottom: 5px; border-style: solid; border-radius: 1000px; border-width: 3px; background-size: cover; background-image: url(assets/logo-circle.png);"></div>
+                      <p style="display: inline-block; width: 50%; position: relative; right: -70px; bottom: 25px; font-size: x-large;"><b id="guiBalance">---</b> ZNZ</p>
                     </div>
                   </div>
                 </div>
@@ -125,13 +125,8 @@
             <div id="Transaction" class="tabcontent">
               <div id='errorNotice'></div>
               <div class='pullDown' style='clear:both;'>
-                <div onclick='toggleDropDown("loadSimpleTransactions")'>Create Simple Transactions<span
+                <div onclick='toggleDropDown("simpleTransactions")'>Create Simple Transactions<span
                     style='float:right;'>▼</span></div>
-                <div id='loadSimpleTransactions' style='display:none'>
-                  In order to use simple transactions you must first load your wallet
-                  <br>
-                  <button onclick='loadUnspendInputs()'>Load Wallet</button>
-                </div>
                 <div id='simpleTransactions' style='display:none'>
                   <label>Address</label>
                   <input type="text" id="address1s">
@@ -343,7 +338,6 @@
     function loadUnspendInputs() {
       if (publicKeyForNetwork) {
         getUnspentTransactions();
-        document.getElementById("loadSimpleTransactions").style.display = 'none';
         document.getElementById("simpleTransactions").style.display = 'block';
         document.getElementById("genIt").style.display = 'block';
       } else {
@@ -354,6 +348,8 @@
       if (!networkEnabled) return alert("Cannot create Simple Transactions in offline mode; this requires an explorer to sync your balance (UTXOs), please enable Networking to use this feature! Otherwise, use 'Advanced Transactions'");
       var address = document.getElementById("address1s").value;
       var value = Number(document.getElementById("value1s").value);
+      let nBalance = getBalance();
+      if (value > nBalance) return alert("Balance is too small! (" + nBalance + " - " + value + " = " + (nBalance - value).toFixed(8) + ")");
       console.log("Constructing TX of value: " + value + " ZNZ");
       // Loop our cached UTXOs and construct a TX
       trx = bitjs.transaction();
