@@ -40,6 +40,23 @@ if (networkEnabled) {
     // Send request
     request.send()
   }
+  var getBlockCount = function() {
+    var request = new XMLHttpRequest();
+    request.open('GET', "https://arcade.zenzo.io/api/v1/web3/getblockcount", true);
+    request.onload = function () {
+      let data = Number(this.response);
+      // If the block count has changed, refresh all of our data!
+      let reloader = document.getElementById("balanceReload");
+      reloader.className = reloader.className.replace(/ playAnim/g, "");
+      if (data > cachedBlockCount) {
+        console.log("New block detected! " + cachedBlockCount + " --> " + data);
+        if (publicKeyForNetwork)
+          getUnspentTransactions();
+      }
+      cachedBlockCount = data;
+    }
+    request.send();
+  }
   var getUnspentTransactions = function () {
     var request = new XMLHttpRequest()
     request.open('GET', "https://chainz.cryptoid.info/znz/api.dws?q=unspent&active=" + publicKeyForNetwork + "&key=fb4fd0981734", true)

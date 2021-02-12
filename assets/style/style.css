@@ -4,22 +4,67 @@ html{
 }
 
 body {
-  background-color:#1e1d22
+  background-color:#f2f4fa;
 }
 textarea,input{
-  background-color:	#c2c0bd;
+  background-color:	#fff;
+  border-style: dashed;
+  border-width: 2px;
+  border-radius: 8px;
+  margin-bottom: 5px;
 }
 button{
   border-radius: 15px;
   padding: 12px 25px 12px;
-  background-color: #e89a37;
-  border: none;
+  background-color: #f2f8fa;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d4f2fc;
   text-align: center;
   font-size: 16px;
+  outline: 0;
 }
 button:hover{
-  background-color:#A8633A;
+  background-color:#d4f2fc;
+  border-color: #70dbff;
 }
+.navButton {
+  color: #999;
+}
+.navButton:hover {
+  color: #334758 !important;
+}
+
+input::-moz-focus-inner { 
+  border: 0; 
+}
+
+.reload {
+  display: inline-block;
+  font-family: Lucida Sans Unicode;
+  cursor: pointer;
+  animation-name: spinner;
+  animation-duration: 0.75s;
+  animation-play-state: paused;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  position: relative;
+  top: 16px;
+}
+
+.playAnim {
+  animation-play-state: running;
+}
+
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
 #page-container {
   position: relative;
   min-height: 100vh;
@@ -52,36 +97,34 @@ button:hover{
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: #404040;
+  background-color: #334758 !important;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #383838;
+  background-color: #334758 !important;
 }
 
 /* Style the tab content */
 .tabcontent {
   font-family:sans-serif;
   display: none;
-  background-color:#afd9ec;
+  background-color:#ffffff;
   padding: 6px 12px;
-  border: 1px solid #303030;
-  filter: drop-shadow(5px 5px 0px #776959);
-  border-top: none;
+  border-radius: 8px;
 }
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #000;
-  color: white;
+  background-color: #0b2840;
+  color: #96a8b6;
   height: 3rem;
   text-align: center;
 }
 
 .navbarSpecial{
-  background-color:#5e5d61;
+  background-color:#ffffff;
 }
 
 /*Breakpoints */

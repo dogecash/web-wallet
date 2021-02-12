@@ -5,36 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
+  <meta http-equiv="X-UA-Compatible" content="IE=9" />
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="assets/bootstrap-4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/style/style.css">
   <script type="text/javascript" src="assets/bootstrap-4.5.0/js/jquery.js"></script>
   <script type="text/javascript" src="assets/bootstrap-4.5.0/js/bootstrap.js"></script>
 </head>
-<audio controls id="woof" style='display:none;'>
-  <source src="assets/woof.mp3" type="audio/mpeg">
-</audio>
 
 <body>
   <div id="page-container">
     <div id="content-wrap">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
-        <img class="navbar-brand" src='assets/logo.png' onclick="document.getElementById('woof').play();" alt="ZENZO"
-          style='vertical-align: middle;width:40px;display:inline'>
+        <img class="navbar-brand" src='assets/logo.png' alt="ZENZO"
+          style='vertical-align: middle;width:150px;display:inline'>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mr-auto" style='background-color:#afd9ec;filter: drop-shadow(5px 5px 3px #323232);'>
-            <li class="nav-item"><a id='start' class="nav-link" onclick="openTab(event, 'home')">Intro</a></li>
-            <li class="nav-item"><a class="nav-link" style='color:black;'
-                onclick="openTab(event, 'keypair')">Wallets</a></li>
-            <li class="nav-item"><a class="nav-link" style='color:black;' onclick="openTab(event, 'Transaction')">Create
+          <ul class="navbar-nav mr-auto" style="cursor: pointer;">
+            <li class="nav-item"><a id='start' class="nav-link tablinks" onclick="openTab(event, 'home')">Intro</a></li>
+            <li class="nav-item"><a class="nav-link tablinks"
+                onclick="openTab(event, 'keypair')">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link tablinks" onclick="openTab(event, 'Transaction')">Create
                 Transaction</a></li>
-            <li class="nav-item"><a class="nav-link" style='color:black;'
+            <li class="nav-item"><a class="nav-link tablinks"
                 onclick="startNetworkTest();openTab(event, 'WalletData');">Network Data</a></li>
-            <li class="nav-item"><a class="nav-link" style='color:black;'
+            <li class="nav-item"><a class="nav-link tablinks"
                 onclick="openTab(event, 'Settings');">Settings</a></li>
           </ul>
         </div>
@@ -96,7 +94,7 @@
                   will not have access to the coins associated with that key</b></h4>
               <br>
               <div id="guiWallet" style="display: none;">
-                <h3>Balance: <b id="guiBalance">---</b> ZNZ</h3>
+                <h3>Balance: <b id="guiBalance">---</b> ZNZ &nbsp;&nbsp;<span id="balanceReload" class=reload onclick="refreshChainData()">&#x21bb;</span></h3>
                 <h3>Address: <b id="guiAddress">---</b></h3>
                 <div style="display: inline;">
                   <button id="guiViewKey" onclick="toggleKeyView()">View Private Key</button>
@@ -175,7 +173,7 @@
                   <option value="custom">custom (In Development)</option>
                 </select>
                 <br>
-                <input type="submit" style='background-color:#243646;color:#dddfe2;'>
+                <input type="submit">
               </form>
               <br>
               <button type="submit" onclick='toggleDebug()'>Toggle Debug mode</button>
@@ -243,6 +241,7 @@
   <script>
     // WALLET STATE DATA
     let cachedUTXOs = [];
+    let cachedBlockCount = 0;
 
     function getBalance() {
       let nBalance = 0;
@@ -330,7 +329,7 @@
         document.getElementById("simpleTransactions").style.display = 'block';
         document.getElementById("genIt").style.display = 'block';
       } else {
-        alert("You need a wallet to transact with! Please import a wallet via the 'Wallets --> Access my wallet' menu");
+        alert("You need a wallet to transact with! Please import a wallet via the 'Dashboard --> Access my wallet' menu");
       }
     }
     function createSimpleTransation() {
@@ -404,9 +403,17 @@
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
       document.getElementById(tabName).style.display = "block";
-      evt.currentTarget.className += " active";
+      if (!evt.currentTarget.className.includes("active"))
+        evt.currentTarget.className += " active";
     }
     document.getElementById("start").click();
+
+    function refreshChainData() {
+      document.getElementById("balanceReload").className += " playAnim";
+      getBlockCount();
+    }
+
+    setInterval(refreshChainData, 15000);
   </script>
 </body>
 

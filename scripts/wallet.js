@@ -159,6 +159,9 @@ importWallet = function () {
     qr.addData(pubKey);
     qr.make();
     document.getElementById('PublicQR').innerHTML = qr.createImgTag();
+    // Set view key as public and refresh QR code
+    viewPrivKey = true;
+    toggleKeyView();
     // Load UTXOs from explorer
     getUnspentTransactions();
   }
