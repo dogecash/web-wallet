@@ -163,10 +163,13 @@ importWallet = function () {
     viewPrivKey = true;
     toggleKeyView();
     // Update identicon
-    document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
-    jdenticon();
+    if (jdenticon) {
+      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+      jdenticon();
+    }
     // Load UTXOs from explorer
-    getUnspentTransactions();
+    if (networkEnabled)
+      getUnspentTransactions();
   }
 }
 
@@ -294,8 +297,10 @@ generateWallet = async function (strPrefix = false) {
       document.getElementById('PublicQR').style.display = 'block';
 
       // Update identicon
-      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
-      jdenticon();
+      if (jdenticon) {
+        document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+        jdenticon();
+      }
       
       document.getElementById('guiWallet').style.display = 'block';
       viewPrivKey = false;

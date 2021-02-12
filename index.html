@@ -33,7 +33,7 @@
                 onclick="openTab(event, 'keypair')">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link tablinks" onclick="openTab(event, 'Transaction')">Create
                 Transaction</a></li>
-            <li class="nav-item"><a class="nav-link tablinks"
+            <li style="display: none;" class="nav-item"><a class="nav-link tablinks"
                 onclick="startNetworkTest();openTab(event, 'WalletData');">Network Data</a></li>
             <li class="nav-item"><a class="nav-link tablinks"
                 onclick="openTab(event, 'Settings');">Settings</a></li>
@@ -351,6 +351,7 @@
       }
     }
     function createSimpleTransation() {
+      if (!networkEnabled) return alert("Cannot create Simple Transactions in offline mode; this requires an explorer to sync your balance (UTXOs), please enable Networking to use this feature! Otherwise, use 'Advanced Transactions'");
       var address = document.getElementById("address1s").value;
       var value = Number(document.getElementById("value1s").value);
       console.log("Constructing TX of value: " + value + " ZNZ");
@@ -427,6 +428,9 @@
     document.getElementById("start").click();
 
     function refreshChainData() {
+      // If in offline mode: don't sync ANY data or connect to the internet
+      if (!networkEnabled) return console.warn("Offline mode: For your security, the wallet will avoid ALL internet requests in offline mode.");
+
       // Update identicon
       document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
       jdenticon();
@@ -437,6 +441,8 @@
     }
 
     window.onload = (() => {
+      // jdenticon might be missing in offline mode; this is fine
+      if (!jdenticon) return;
       // Configure Identicon
       jdenticon.configure({
         saturation: {
