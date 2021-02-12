@@ -39,6 +39,12 @@ input::-moz-focus-inner {
   border: 0; 
 }
 
+.graybox {
+  margin: 5px;
+  background-color: white;
+  border-radius: 8px;
+}
+
 .reload {
   display: inline-block;
   font-family: Lucida Sans Unicode;

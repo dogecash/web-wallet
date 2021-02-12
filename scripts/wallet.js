@@ -162,6 +162,9 @@ importWallet = function () {
     // Set view key as public and refresh QR code
     viewPrivKey = true;
     toggleKeyView();
+    // Update identicon
+    document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+    jdenticon();
     // Load UTXOs from explorer
     getUnspentTransactions();
   }
@@ -290,6 +293,9 @@ generateWallet = async function (strPrefix = false) {
       document.getElementById('PublicQR').innerHTML = qr.createImgTag();
       document.getElementById('PublicQR').style.display = 'block';
 
+      // Update identicon
+      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+      jdenticon();
       
       document.getElementById('guiWallet').style.display = 'block';
       viewPrivKey = false;

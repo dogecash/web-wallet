@@ -11,6 +11,9 @@
   <link rel="stylesheet" type="text/css" href="assets/style/style.css">
   <script type="text/javascript" src="assets/bootstrap-4.5.0/js/jquery.js"></script>
   <script type="text/javascript" src="assets/bootstrap-4.5.0/js/bootstrap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.0/dist/jdenticon.min.js" async
+        integrity="sha384-VngWWnG9GS4jDgsGEUNaoRQtfBGiIKZTiXwm9KpgAeaRn6Y/1tAFiyXqSzqC8Ga/" crossorigin="anonymous">
+  </script>
 </head>
 
 <body>
@@ -94,8 +97,23 @@
                   will not have access to the coins associated with that key</b></h4>
               <br>
               <div id="guiWallet" style="display: none;">
-                <h3>Balance: <b id="guiBalance">---</b> ZNZ &nbsp;&nbsp;<span id="balanceReload" class=reload onclick="refreshChainData()">&#x21bb;</span></h3>
-                <h3>Address: <b id="guiAddress">---</b></h3>
+                <div id="banners" style="height: 160px; width: 100%; display: flex; color: white; margin-bottom: 50px;">
+                  <div class="graybox" style="height: 99%; width: 300px; background-color: #7070e3;">
+                    <h3 style="margin: 10px; position: relative; left: 165px;">Address</h3>
+                    <br>
+                    <div>
+                      <canvas id="identicon" width="65" height="65" data-jdenticon-value="" style="background-color: white; border-color: white; border-width: 5px; border-style: solid; border-radius: 1000px; position: relative; top: -30px; left: 10px;"></canvas>
+                      <b id="guiAddress" style="line-break: anywhere; width: 70%; display: inline-block; right: -11px; position: relative; font-size: smaller; bottom: 50px; word-break: break-all; font-family: Montserrat,sans-serif; font-weight: 300;">---</b>
+                    </div>
+                  </div>
+                  <div class="graybox" style="height: 99%; width: 300px; background-color: #5a78f0;">
+                    <h3 style="margin: 10px; position: relative; left: 135px;">Balance &nbsp;&nbsp;<span id="balanceReload" class=reload onclick="refreshChainData()">&#x21bb;</span></h3>
+                    <div>
+                      <div style="display: inline-block; position: relative; width: 65px; height: 65px; left: 10px; bottom: -8px; border-style: solid; border-radius: 1000px; border-width: 3px; background-size: cover; background-image: url(assets/logo-circle.png);"></div>
+                      <p style="display: inline-block; width: 50%; position: relative; right: -65px; bottom: 19px; font-size: x-large;"><b id="guiBalance">---</b> ZNZ</p>
+                    </div>
+                  </div>
+                </div>
                 <div style="display: inline;">
                   <button id="guiViewKey" onclick="toggleKeyView()">View Private Key</button>
                   <div id="PrivateQR"  style="display: none; padding: 10px;"></div>
@@ -409,7 +427,12 @@
     document.getElementById("start").click();
 
     function refreshChainData() {
+      // Update identicon
+      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+      jdenticon();
+      // Play reload anim
       document.getElementById("balanceReload").className += " playAnim";
+      // Fetch block count + UTXOs
       getBlockCount();
     }
 
