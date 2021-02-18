@@ -167,6 +167,10 @@ importWallet = function (newWif = false) {
       document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
       jdenticon();
     }
+    if (!newWif) {
+        // Hide the encryption warning
+      document.getElementById('genKeyWarning').style.display = 'block';
+    }
     // Load UTXOs from explorer
     if (networkEnabled)
       getUnspentTransactions();
