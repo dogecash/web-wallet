@@ -85,7 +85,7 @@ if (debug) {
 }
 document.getElementById('dcfooter').innerHTML = '© 2021 ZENZO Ecosystem - All rights reserved. <br><a href="https://github.com/ZENZO-Ecosystem/zenzo-web3">ZENZO Web 3.0 - v' + wallet_version + '</a>';
 //Wallet Import
-importWallet = function () {
+importWallet = function (newWif = false) {
   if (walletAlreadyMade != 0) {
     var walletConfirm = window.confirm("Do you really want to import a new address? If you haven't saved the last private key, the key will get LOST forever alongside ANY funds with it.");
   } else {
@@ -94,7 +94,7 @@ importWallet = function () {
   if (walletConfirm) {
     walletAlreadyMade++;
     //Wallet Import Format to Private Key
-    var privateKeyWIF = document.getElementById("privateKey").value;
+    var privateKeyWIF = newWif || document.getElementById("privateKey").value;
     privateKeyForTransactions = privateKeyWIF;
     var byteArryConvert = from_b58(privateKeyWIF, MAP)
     var droplfour = byteArryConvert.slice(0, byteArryConvert.length - 4);
@@ -311,4 +311,27 @@ generateWallet = async function (strPrefix = false) {
     }
     return nRet;
   }
+}
+
+encryptWallet = async function () {
+  // Encrypt the wallet WIF with AES-GCM and a user-chosen password - suitable for browser storage
+  let encWIF = await encrypt(privateKeyForTransactions);
+  if (typeof encWIF !== "string") return false;
+  // Set the encrypted wallet in localStorage
+  localStorage.setItem("encwif", encWIF);
+}
+
+decryptWallet = async function () {
+  // Check if there's any encrypted WIF available, if so, prompt to decrypt it
+  let encWif = localStorage.getItem("encwif");
+  if (!encWif || encWif.length < 1) {
+    console.log("No local encrypted wallet found!");
+    return false;
+  }
+  importWallet(await decrypt(encWif));
+  return true;
+}
+
+hasEncryptedWallet = function () {
+  return localStorage.getItem("encwif") ? true : false;
 }
