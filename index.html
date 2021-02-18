@@ -288,9 +288,9 @@
             document.getElementById("importWallet").style.display = 'block';
             document.getElementById("wToggle").innerHTML = "Create A New Wallet";
           } else {
-            document.getElementById("generateWallet").style.display = 'block';
-            document.getElementById("importWallet").style.display = 'none';
-            document.getElementById("wToggle").innerHTML = "Access My Wallet";
+            document.getElementById("generateWallet").style.display = 'none';
+            document.getElementById("importWallet").style.display = 'block';
+            document.getElementById("wToggle").innerHTML = "Create A New Wallet";
           }
         }).catch(e => {
           document.getElementById("generateWallet").style.display = 'none';
