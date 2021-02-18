@@ -319,6 +319,8 @@ encryptWallet = async function () {
   if (typeof encWIF !== "string") return false;
   // Set the encrypted wallet in localStorage
   localStorage.setItem("encwif", encWIF);
+  // Hide the encryption warning
+  document.getElementById('genKeyWarning').style.display = 'none';
 }
 
 decryptWallet = async function () {
@@ -328,7 +330,12 @@ decryptWallet = async function () {
     console.log("No local encrypted wallet found!");
     return false;
   }
-  importWallet(await decrypt(encWif));
+  let decWif = await decrypt(encWif);
+  if (decWif === "decryption failed!") {
+    alert("Incorrect password!");
+    return false;
+  }
+  importWallet(decWif);
   return true;
 }
 
