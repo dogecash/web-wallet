@@ -2,9 +2,13 @@
 
 	var bitjs = window.bitjs = function () { };
 
+	/* chainparams */
+	const PUBKEY_ADDRESS = 81;
+	const SECRET_KEY     = 215;
+
 	/* public vars */
-	bitjs.pub = 0x51;
-	bitjs.priv = 0xd7;
+	bitjs.pub  = PUBKEY_ADDRESS.toString(16);
+	bitjs.priv = SECRET_KEY.toString(16);
 	bitjs.compressed = true;
 
 	/* provide a privkey and return an WIF  */
