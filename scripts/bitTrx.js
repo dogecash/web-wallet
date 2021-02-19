@@ -2,10 +2,6 @@
 
 	var bitjs = window.bitjs = function () { };
 
-	/* chainparams */
-	const PUBKEY_ADDRESS = 81;
-	const SECRET_KEY     = 215;
-
 	/* public vars */
 	bitjs.pub  = PUBKEY_ADDRESS.toString(16);
 	bitjs.priv = SECRET_KEY.toString(16);

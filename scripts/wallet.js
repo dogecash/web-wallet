@@ -132,7 +132,7 @@ importWallet = function (newWif = false) {
     pubKeyHashing.update(publicKeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
     var pubKeyHashRipemd160 = byteToHexString(ripemd160(hexStringToByte(pubKeyHash))).toUpperCase()
-    var pubKeyHashNetwork = "51" + pubKeyHashRipemd160
+    var pubKeyHashNetwork = PUBKEY_ADDRESS.toString(16) + pubKeyHashRipemd160;
     const pubKeyHashingS = new jsSHA("SHA-256", "HEX", { "numRounds": 2 });
     pubKeyHashingS.update(pubKeyHashNetwork);
     const pubKeyHashingSF = pubKeyHashingS.getHash("HEX").toUpperCase();
@@ -197,7 +197,7 @@ generateWallet = async function (strPrefix = false) {
     }
     //Private Key Generation
     var privateKeyHex = byteToHexString(privateKeyBytes).toUpperCase()
-    var privateKeyAndVersion = "d7" + privateKeyHex + "01"
+    var privateKeyAndVersion = SECRET_KEY.toString(16) + privateKeyHex + "01"
     const shaObj = new jsSHA("SHA-256", "HEX", { "numRounds": 2 });
     shaObj.update(privateKeyAndVersion);
     const hash = shaObj.getHash("HEX");
@@ -230,7 +230,7 @@ generateWallet = async function (strPrefix = false) {
     pubKeyHashing.update(publicKeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
     var pubKeyHashRipemd160 = byteToHexString(ripemd160(hexStringToByte(pubKeyHash))).toUpperCase()
-    var pubKeyHashNetwork = "51" + pubKeyHashRipemd160
+    var pubKeyHashNetwork = PUBKEY_ADDRESS.toString(16) + pubKeyHashRipemd160
     const pubKeyHashingS = new jsSHA("SHA-256", "HEX", { "numRounds": 2 });
     pubKeyHashingS.update(pubKeyHashNetwork);
     const pubKeyHashingSF = pubKeyHashingS.getHash("HEX").toUpperCase();
