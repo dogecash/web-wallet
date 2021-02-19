@@ -138,6 +138,6 @@ if (networkEnabled) {
     request.send()
   }
   //Call a version check if network is enabled:
-  versionCheck();
+  //versionCheck();
   document.getElementById('Network').innerHTML = "<b> Network Enabled </b>";
 }
