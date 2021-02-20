@@ -89,7 +89,7 @@ if (networkEnabled) {
   var sendTransaction = function (hex) {
     if (typeof hex !== 'undefined') {
       var request = new XMLHttpRequest()
-      request.open('GET', 'https://arcade.zenzo.io/api/v1/web3/submittx?tx=' + hex, true)
+      request.open('GET', 'https://stakecubecoin.net/pivx/submittx?tx=' + hex, true)
       request.onload = function () {
         data = this.response;
         if (data.length === 64) {
