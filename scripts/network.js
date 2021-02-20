@@ -42,7 +42,7 @@ if (networkEnabled) {
   }
   var getBlockCount = function() {
     var request = new XMLHttpRequest();
-    request.open('GET', "https://arcade.zenzo.io/api/v1/web3/getblockcount", true);
+    request.open('GET', "https://stakecubecoin.net/pivx/blocks", true);
     request.onload = function () {
       let data = Number(this.response);
       // If the block count has changed, refresh all of our data!
