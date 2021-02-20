@@ -14,7 +14,7 @@ if (networkEnabled) {
       var typeNumber = 4;
       var errorCorrectionLevel = 'L';
       var qr = qrcode(typeNumber, errorCorrectionLevel);
-      qr.addData('zenzo:' + data['addrStr']);
+      qr.addData('pivx:' + data['addrStr']);
       qr.make();
       document.getElementById("addrStrQR").innerHTML = qr.createImgTag();
       document.getElementById("addrStr").innerHTML = data['addrStr'];
@@ -59,7 +59,7 @@ if (networkEnabled) {
   }
   var getUnspentTransactions = function () {
     var request = new XMLHttpRequest()
-    request.open('GET', "https://chainz.cryptoid.info/znz/api.dws?q=unspent&active=" + publicKeyForNetwork + "&key=fb4fd0981734", true)
+    request.open('GET', "https://chainz.cryptoid.info/pivx/api.dws?q=unspent&active=" + publicKeyForNetwork + "&key=fb4fd0981734", true)
     request.onload = function () {
       data = JSON.parse(this.response)
       if (!data.unspent_outputs || data.unspent_outputs.length === 0) {

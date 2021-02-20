@@ -19,14 +19,17 @@ button{
   background-color: #f2f8fa;
   border-style: solid;
   border-width: 1px;
-  border-color: #d4f2fc;
+  margin: 1px;
+  border-color: #c396ff;
   text-align: center;
   font-size: 16px;
   outline: 0;
 }
 button:hover{
-  background-color:#d4f2fc;
-  border-color: #70dbff;
+  background-color:#f6efff;
+  border-color: #8426ff;
+  border-width: 2px;
+  margin: 0px;
 }
 .navButton {
   color: #999;

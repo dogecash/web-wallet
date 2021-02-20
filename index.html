@@ -7,26 +7,24 @@
   <meta content="utf-8" http-equiv="encoding">
   <meta http-equiv="X-UA-Compatible" content="IE=9" />
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-  <title>ZENZO Web 3.0 wallet</title>
+  <title>My PIVX Wallet</title>
   <meta name="description" content="An open-source, cryptographically-secure web wallet designed for the future of self-sovereign and adoption-friendly cryptocurrency.">
   <meta name="keywords" content="web,wallet,webwallet,crypto,cryptocurrency,opensource,oss">
   <meta property="og:image" content="assets/logo.png">
-  <meta property="og:site" content="ZENZO Web 3.0 wallet">
+  <meta property="og:site" content="MyPIVXWallet">
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <meta name="msapplication-TileColor" content="#8778dc">
-  <meta name="theme-color" content="#8778dc">
-  <link rel="canonical" href="https://arcade.zenzo.io/index.html">
+  <meta name="msapplication-TileColor" content="#470e75">
+  <meta name="theme-color" content="#470e75">
   <meta name="description" content="An open-source, cryptographically-secure web wallet designed for the future of self-sovereign and adoption-friendly cryptocurrency.">
   <meta name="keywords" content="web,wallet,webwallet,crypto,cryptocurrency,opensource,oss">
-  <meta name="twitter:site" content="@zenzo_ecosystem">
+  <meta name="twitter:site" content="@JSKitteh">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ZENZO Web 3.0 wallet">
+  <meta name="twitter:title" content="MyPIVXWallet">
   <meta name="twitter:description" content="An open-source, cryptographically-secure web wallet designed for the future of self-sovereign and adoption-friendly cryptocurrency.">
   <meta name="twitter:image" content="assets/logo.png">
-  <meta property="og:title" content="ZENZO Web 3.0 wallet">
+  <meta property="og:title" content="MyPIVXWallet">
   <meta property="og:description" content="An open-source, cryptographically-secure web wallet designed for the future of self-sovereign and adoption-friendly cryptocurrency.">
-  <meta property="og:url" content="https://arcade.zenzo.io/index.html">
-  <meta property="og:site_name" content="ZENZO Web 3.0 wallet">
+  <meta property="og:site_name" content="MyPIVXWallet">
   <meta property="og:locale" content="en_US">
   <meta property="og:image" content="assets/logo.png">
 
@@ -44,8 +42,8 @@
       // These below params share the same names as the CPP params, so finding and editing these is easy-peasy!
 
       /* chainparams */
-      const PUBKEY_ADDRESS = 81;
-      const SECRET_KEY     = 215;
+      const PUBKEY_ADDRESS = 30;
+      const SECRET_KEY     = 212;
   </script>
 </head>
 
@@ -53,7 +51,7 @@
   <div id="page-container">
     <div id="content-wrap">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
-        <img class="navbar-brand noselect" src='assets/logo.png' alt="ZENZO"
+        <img class="navbar-brand noselect" src='assets/logo.png' alt="PIVX"
           style='vertical-align: middle;width:150px;display:inline'>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +74,7 @@
       <br>
       <div style='display:none;background-color:red;margin-bottom:15px;' id='outdated'>WARNING: your version is outdated,
         please update to the newest stable version at the <a
-          href='https://github.com/ZENZO-Ecosystem/zenzo-web3/releases'>ZENZO Web 3.0 Github</a></div>
+          href='https://github.com/PIVX-Labs/MyPIVXWallet/releases'>MyPIVXWallet Github</a></div>
 
       <div class="container-fluid">
         <div class="row no-gutters">
@@ -89,12 +87,12 @@
           <div class='col-md-10'>
             <div id="home" class="tabcontent">
               <center>
-                <h3>Welcome to the ZENZO Web 3.0 wallet!</h3>
+                <h3>Welcome to My PIVX Wallet!</h3>
               </center>
               <h4>Be your own Bank!</h4>
               <h5 style='text-indent: 30px;'>
-                The ZENZO web 3.0 wallet has <b>no custody</b> over your funds. You are in full ownership of your keys and your ZNZ.
-                With this wallet, you can use ZENZO across the web, on-the-go, with full safety of your funds in your very 
+                MyPIVXWallet has <b>no custody</b> over your funds. You are in full ownership of your keys and your PIV.
+                With this wallet, you can use PIVX across the web, on-the-go, with full safety of your funds in your very 
                 own protection. The wallet has many customization options, can be downloaded and ran locally, has a dedicated 
                 offline mode, and can be cloned directly from GitHub!
               </h5>
@@ -103,12 +101,12 @@
               <h5 style='text-indent: 30px;'>
                 With our built-in tools, you can generate cryptographically-secure addresses with the power of your browser and 
                 hardware. You can generate 'random' addresses or you can generate vanity addresses with your own custom prefixes. 
-                In addition, <b>all</b> keys are entirely universal and can be imported/exported directly to and from ZENZO Core to this 
+                In addition, <b>all</b> keys are entirely universal and can be imported/exported directly to and from PIVX Core to this 
                 web wallet.
               </h5>
             </div>
             <div id="keypair" class="tabcontent">
-              <h3>Generate ZNZ wallet</h3>
+              <h3>Generate PIV wallet</h3>
               <div id='importWallet' style='display:none;'>
                 <input type="text" id='privateKey' placeholder="Private Key">
                 <button onclick="importWallet()">Import wallet</button>
@@ -119,7 +117,7 @@
               <br>
               <div id='generateVanityWallet'>
                 <input style="display:none;" type="text" id='prefix' placeholder="Address Prefix">
-                <button onclick="generateVanityWallet()">Create A Vanity Wallet</button>
+                <button onclick="generateVanityWallet()">Create A Vanity Wallet<br>(Experimental)</button>
               </div>
               <br>
               <button id='wToggle' onclick='toggleWallet()'>Access My Wallet</button>
@@ -132,7 +130,7 @@
               <br>
               <div id="guiWallet" style="display: none;">
                 <div id="banners" style="height: 160px; width: 100%; display: flex; flex-wrap: wrap; color: white; margin-bottom: 250px;">
-                  <div class="graybox" style="height: 99%; width: 300px; background: linear-gradient(50deg, rgb(175, 170, 255) 0%, rgb(112, 112, 227) 80%);"">
+                  <div class="graybox" style="height: 99%; width: 300px; background: linear-gradient(50deg, #2c0b4d 0%, #400c6a 80%);"">
                     <h3 class="noselect" style="margin: 10px; position: relative; left: 165px; cursor: default;">Address</h3>
                     <br>
                     <div>
@@ -140,13 +138,15 @@
                       <b id="guiAddress" style="line-break: anywhere; width: 60%; display: inline-block; right: -30px; position: relative; font-size: smaller; bottom: 50px; word-break: break-all; font-family: monospace; font-weight: 300;">---</b>
                     </div>
                   </div>
-                  <div class="graybox" style="height: 99%; width: 300px; background: linear-gradient(50deg, rgba(112,112,227,1) 0%, rgba(45,181,215,1) 90%);"">
+                  <div class="graybox" style="height: 99%; width: 300px; background: linear-gradient(50deg, #400c6a 0%, #521186 90%);"">
                     <h3 class="noselect" style="margin: 10px; position: relative; left: 135px; cursor: default;">Balance &nbsp;&nbsp;<span id="balanceReload" class="reload noselect" onclick="refreshChainData()">&#x21bb;</span></h3>
                     <div>
                       <div style="display: inline-block; position: relative; width: 65px; height: 65px; left: 30px; bottom: 5px; border-style: solid; border-radius: 1000px; border-width: 3px; background-size: cover; background-image: url(assets/logo-circle.png);"></div>
-                      <p style="display: inline-block; width: 50%; position: relative; right: -70px; bottom: 25px; font-size: x-large;"><b id="guiBalance">---</b> ZNZ</p>
+                      <p style="display: inline-block; width: 50%; position: relative; right: -70px; bottom: 25px; font-size: x-large;"><b id="guiBalance">---</b> PIV</p>
                     </div>
                   </div>
+                  <br>
+                  <p style="color:palevioletred">Please <b>AVOID</b> sending to/from Shielded or Cold Staking addresses using this wallet - this functionality is unsupported at this moment.</p>
                 </div>
                 <div style="display: inline;">
                   <button id="guiViewKey" onclick="toggleKeyView()">View Private Key</button>
@@ -206,7 +206,7 @@
                   <h2>Signed Raw Transaction</h2>
                   <textarea rows="15" cols="70" id="rawTrx"></textarea>
                   <h3>Don't understand how this works? <a target='_blank'
-                      href='https://github.com/ZENZO-Ecosystem/zenzo-web3#transaction'>Tutorial Here</a>
+                      href='https://github.com/PIVX-Labs/MyPIVXWallet#transaction'>Tutorial Here</a>
                     <h4>Advanced Details: <br>locktime is set to 0, sequence is set to max. SIGHASH_ALL option is chosen
                       for signing raw Transaction.</h4>
                 </div>
@@ -216,7 +216,7 @@
               <form action="javascript:setExplorer()">
                 <label for="explorer">Choose a explorer:</label>
                 <select id="explorer" name="explorer">
-                  <option value="cryptoid">https://chainz.cryptoid.info/znz</option>
+                  <option value="cryptoid">https://chainz.cryptoid.info/PIV</option>
                   <option value="custom">custom (In Development)</option>
                 </select>
                 <br>
@@ -315,15 +315,23 @@
       document.getElementById('prefix').value = "";
       document.getElementById('prefix').style.display = 'none';
       if (toggle === "Access My Wallet") {
+        if (!hasEncryptedWallet()) {
+          // No local wallet found
+            document.getElementById("generateWallet").style.display = 'none';
+            document.getElementById("importWallet").style.display = 'block';
+            document.getElementById("wToggle").innerHTML = "Create A New Wallet";
+            return;
+        }
+        // We have a local wallet! Display the decryption prompt
         decryptWallet().then(hasWallet => {
           if (hasWallet) {
             document.getElementById("generateWallet").style.display = 'none';
             document.getElementById("importWallet").style.display = 'block';
             document.getElementById("wToggle").innerHTML = "Create A New Wallet";
           } else {
-            document.getElementById("generateWallet").style.display = 'none';
-            document.getElementById("importWallet").style.display = 'block';
-            document.getElementById("wToggle").innerHTML = "Create A New Wallet";
+            document.getElementById("generateWallet").style.display = 'block';
+            document.getElementById("importWallet").style.display = 'none';
+            document.getElementById("wToggle").innerHTML = "Access My Wallet";
           }
         }).catch(e => {
           document.getElementById("generateWallet").style.display = 'none';
@@ -342,7 +350,7 @@
       if (strPrefix.value.length === 0) {
         // No prefix, display the intro!
         strPrefix.style.display = 'block';
-        document.getElementById('genKeyWarning').style.display = 'block';
+        document.getElementById('genKeyWarning').style.display = 'none';
         document.getElementById('PrivateTxt').innerHTML = "---";
         document.getElementById('guiAddress').innerHTML = "---";
       } else {
@@ -397,20 +405,20 @@
       var value = Number(document.getElementById("value1s").value);
       let nBalance = getBalance();
       if (value > nBalance) return alert("Balance is too small! (" + nBalance + " - " + value + " = " + (nBalance - value).toFixed(8) + ")");
-      console.log("Constructing TX of value: " + value + " ZNZ");
+      console.log("Constructing TX of value: " + value + " PIV");
       // Loop our cached UTXOs and construct a TX
       trx = bitjs.transaction();
       let txValue = 0;
       for (const UTXO of cachedUTXOs) {
         if (txValue > value) {
           // Required Coin Control value met, yahoo!
-          console.log("Coin Control: TX Constructed! Selected " + trx.inputs.length + " input(s) (" + txValue + " ZNZ)");
+          console.log("Coin Control: TX Constructed! Selected " + trx.inputs.length + " input(s) (" + txValue + " PIV)");
           break;
         }
         trx.addinput(UTXO.tx_hash, UTXO.tx_ouput_n, UTXO.script);
         txValue += Number((UTXO.value / 100000000).toFixed(8));
         txValue = Number(txValue.toFixed(8));
-        console.log("Coin Control: Selected input " + UTXO.tx_hash.substr(0, 6) + "(" + UTXO.tx_ouput_n + ")... (Added " + (UTXO.value / 100000000).toFixed(8) + " ZNZ - Total: " + txValue + ")");
+        console.log("Coin Control: Selected input " + UTXO.tx_hash.substr(0, 6) + "(" + UTXO.tx_ouput_n + ")... (Added " + (UTXO.value / 100000000).toFixed(8) + " PIV - Total: " + txValue + ")");
       }
 
       if (address != '' && value != '') {
