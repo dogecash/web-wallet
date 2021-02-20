@@ -284,6 +284,7 @@ generateWallet = async function (strPrefix = false) {
       document.getElementById('guiAddress').innerHTML = pubKey;
       // New address... so there definitely won't be a balance
       document.getElementById('guiBalance').innerHTML = "0";
+      document.getElementById('guiBalanceBox').style.fontSize = "x-large";
       //QR Codes
       var typeNumber = 4;
       var errorCorrectionLevel = 'L';
