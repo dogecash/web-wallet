@@ -53,7 +53,7 @@
       <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
         <img class="navbar-brand noselect" src='assets/logo.png' alt="PIVX"
           style='vertical-align: middle;width:150px;display:inline'>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        <button id="navbarToggler" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -491,6 +491,10 @@
       document.getElementById(tabName).style.display = "block";
       if (!evt.currentTarget.className.includes("active"))
         evt.currentTarget.className += " active";
+
+      // Close the navbar if it's not already closed
+      if (!document.getElementById("navbarToggler").className.includes("collapsed"))
+        document.getElementById("navbarToggler").click();
     }
     document.getElementById("start").click();
 
