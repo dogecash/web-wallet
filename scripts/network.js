@@ -64,11 +64,13 @@ if (networkEnabled) {
       data = JSON.parse(this.response)
       if (!data.unspent_outputs || data.unspent_outputs.length === 0) {
         console.log('No unspent Transactions');
-        document.getElementById("errorNotice").innerHTML = '<h4>Error:</h4><h5>It seems there are no unspent inputs associated with your wallet. This means you have no funds! D:</h5>';
+        document.getElementById("errorNotice").innerHTML = '<div class="alert alert-danger" role="alert"><h4>Note:</h4><h5>You don\'t have any funds, get some coins first!</h5></div>';
         cachedUTXOs = [];
       } else {
         cachedUTXOs = [];
         amountOfTransactions = data.unspent_outputs.length;
+        if (amountOfTransactions > 0)
+          document.getElementById("errorNotice").innerHTML = '';
         if (amountOfTransactions <= 1000) {
           for (i = 0; i < amountOfTransactions; i++) {
             cachedUTXOs.push(data.unspent_outputs[i]);
@@ -78,7 +80,7 @@ if (networkEnabled) {
         } else {
           //Temporary message for when there are alot of inputs
           //Probably use change all of this to using websockets will work better
-          document.getElementById("errorNotice").innerHTML = '<h4>Error:</h4><h5>We are sorry but this address has over 1k inputs. In this version we do not support this. Please import your private key to a desktop wallet or wait for an update</h5>';
+          document.getElementById("errorNotice").innerHTML = '<div class="alert alert-danger" role="alert"><h4>Note:</h4><h5>This address has over 1000 UTXOs, which may be problematic for the wallet to handle, transact with caution!</h5></div>';
         }
       }
       console.log('Total Balance:' + balance);

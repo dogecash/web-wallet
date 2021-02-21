@@ -132,7 +132,6 @@
               </h5>
             </div>
             <div id="keypair" class="tabcontent">
-              <h3>Generate PIV wallet</h3>
               <input style="width: 0px; height: 0px; opacity: 0;" type="text" id="clipboard">
               <div id='importWallet' style='display:none;'>
                 <input type="text" id='privateKey' placeholder="Private Key">
@@ -150,10 +149,13 @@
               <button id='wToggle' onclick='toggleWallet()'>Access My Wallet</button>
               <br>
               <br>
-              <h4 id='genKeyWarning' style='display: none;'><b>Warning: if you do not save your private key you
-                  will not have access to the coins associated with that key<br><br>
-                  Would you like to encrypt & save your wallet in your browser?<br>
-                  <button onclick="encryptWallet();">Encrypt Wallet</button></b></h4>
+              <div id='genKeyWarning' style='display: none;' class="alert alert-danger" role="alert">
+                <h4><b>WARNING:</b> if you don't save your private key you
+                  will lose access to your funds!<br><br>
+                  Would you like to encrypt & save your wallet in your browser?<br><br>
+                  <button onclick="encryptWallet();">Encrypt Wallet</button>
+                </h4>
+              </div>
               <br>
               <div id="guiWallet" style="display: none;">
                 <div id="banners" style="height: 160px; width: 100%; display: flex; flex-wrap: wrap; color: white; margin-bottom: 250px;">
@@ -245,7 +247,7 @@
             </div>
             <div id="Settings" class="tabcontent">
               <form action="javascript:setExplorer()">
-                <label for="explorer">Choose a explorer:</label>
+                <label for="explorer">Choose an explorer:</label>
                 <select id="explorer" name="explorer">
                   <option value="cryptoid">https://chainz.cryptoid.info/pivx</option>
                   <option value="custom">custom (In Development)</option>
