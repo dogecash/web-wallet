@@ -159,6 +159,14 @@ importWallet = function (newWif = false) {
     qr.addData(pubKey);
     qr.make();
     document.getElementById('PublicQR').innerHTML = qr.createImgTag();
+    document.getElementById('ModalQRLabel').innerHTML = 'pivx:' + pubKey;
+    let modalQR = document.getElementById('ModalQR');
+    modalQR.innerHTML  = qr.createImgTag();
+    modalQR.firstChild.style.width = "100%";
+    modalQR.firstChild.style.height = "auto";
+    modalQR.firstChild.style.imageRendering = "crisp-edges";
+    document.getElementById('clipboard').value = pubKey;
+
     // Set view key as public and refresh QR code
     viewPrivKey = true;
     toggleKeyView();
@@ -300,6 +308,13 @@ generateWallet = async function (strPrefix = false) {
       qr.make();
       document.getElementById('PublicQR').innerHTML = qr.createImgTag();
       document.getElementById('PublicQR').style.display = 'block';
+      document.getElementById('ModalQRLabel').innerHTML = 'pivx:' + pubKey;
+      let modalQR = document.getElementById('ModalQR');
+      modalQR.innerHTML  = qr.createImgTag();
+      modalQR.firstChild.style.width = "100%";
+      modalQR.firstChild.style.height = "auto";
+      modalQR.firstChild.style.imageRendering = "crisp-edges";
+      document.getElementById('clipboard').value = pubKey;
 
       // Update identicon
       if (jdenticon) {
