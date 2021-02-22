@@ -4,7 +4,8 @@ html{
 }
 
 body {
-  background-color:#f2f4fa;
+  background-color:#150c25;
+  color: #f2f8fa;
 }
 textarea,input{
   background-color:	#fff;
@@ -14,20 +15,22 @@ textarea,input{
   margin-bottom: 5px;
 }
 button{
+  color:rgba(255, 255, 255, 0.65);
   border-radius: 15px;
   padding: 12px 25px 12px;
-  background-color: #f2f8fa;
+  background-color: #380c6a;
   border-style: solid;
   border-width: 1px;
   margin: 1px;
-  border-color: #c396ff;
+  border-color: #7300ff;
   text-align: center;
   font-size: 16px;
   outline: 0;
 }
 button:hover{
-  background-color:#f6efff;
-  border-color: #8426ff;
+  color:rgba(255, 255, 255, 0.95);
+  background-color:#380c6a;
+  border-color: #8621ff;
   border-width: 2px;
   margin: 0px;
 }
@@ -38,6 +41,20 @@ button:hover{
   color: #334758 !important;
 }
 
+.alert-danger {
+  color: #fff;
+  background-color: #ffabb361;
+  border-color: #ba0014;
+}
+
+.nav-link {
+  color: rgb(255, 255, 255) !important;
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
 input::-moz-focus-inner { 
   border: 0; 
 }
@@ -46,6 +63,10 @@ input::-moz-focus-inner {
   margin: 5px;
   background-color: white;
   border-radius: 8px;
+}
+
+.modal {
+  color: black;
 }
 
 .reload {
@@ -126,14 +147,18 @@ input::-moz-focus-inner {
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #334758 !important;
+  background-color: #b088ff !important;
+}
+
+.active {
+  color: #b088ff !important;
 }
 
 /* Style the tab content */
 .tabcontent {
   font-family:sans-serif;
   display: none;
-  background-color:#ffffff;
+  background-color:#0f0b16;
   padding: 6px 12px;
   border-radius: 8px;
 }
@@ -141,14 +166,14 @@ input::-moz-focus-inner {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #0b2840;
+  background-color: #2b0950;
   color: #96a8b6;
   height: 3rem;
   text-align: center;
 }
 
 .navbarSpecial{
-  background-color:#ffffff;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(16,12,24,1) 35%, #521186 100%);
 }
 
 /*Breakpoints */
