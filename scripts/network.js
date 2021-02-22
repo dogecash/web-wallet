@@ -95,10 +95,14 @@ if (networkEnabled) {
         data = this.response;
         if (data.length === 64) {
           console.log('Transaction sent! ' + data);
-          document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Transaction sent! ' + data + '</h4>');
+          let addr = document.getElementById("address1s");
+          if (addr.value !== donationAddress)
+            document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Transaction sent! ' + data + '</h4>');
+          else
+            document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Thank you for supporting MyPIVXWallet! 💜💜💜<br>' + data + '</h4>');
           document.getElementById("loadSimpleTransactions").style.display = 'block';
           document.getElementById("simpleTransactions").style.display = 'none';
-          document.getElementById("address1s").innerHTML = '';
+          addr.value = '';
           document.getElementById("value1s").innerHTML = '';
         } else {
           console.log('Error sending transaction: ' + data);

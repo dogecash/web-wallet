@@ -45,6 +45,11 @@
       /* chainparams */
       const PUBKEY_ADDRESS = 30;
       const SECRET_KEY     = 212;
+
+
+
+      // Cool stuff
+      const donationAddress = "DBs22sfKRHtuWLxPPtXNyjYMcSQ6scihco";
   </script>
 </head>
 
@@ -63,7 +68,7 @@
             <li class="nav-item"><a id='start' class="nav-link tablinks" onclick="openTab(event, 'home')">Intro</a></li>
             <li class="nav-item"><a class="nav-link tablinks"
                 onclick="openTab(event, 'keypair')">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link tablinks" onclick="openTab(event, 'Transaction')">Create
+            <li class="nav-item"><a id="txTab" class="nav-link tablinks" onclick="openTab(event, 'Transaction')">Create
                 Transaction</a></li>
             <li style="display: none;" class="nav-item"><a class="nav-link tablinks"
                 onclick="startNetworkTest();openTab(event, 'WalletData');">Network Data</a></li>
@@ -130,6 +135,17 @@
                 still function in Offline mode, with no dependency on the internet for barebones functionality, use 'Manual Transactions' to
                 manually form raw transactions while offline, and broadcast them at your own pace, through your own node.
               </h5>
+              <br>
+              <h4>By the community, for the community</h4>
+              <h5 style='text-indent: 30px;'>
+                MyPIVXWallet is built with love without any fees, privacy intrusions or advertising, meaning we have zero revenue streams from
+                the project, it is ran entirely on faith and love for the PIVX community, and thus, we would like to ask for donations to keep
+                the service hosted, to pay for maintenence, and to motivate the team at PIVX Labs to continue adding new and innovative features.
+
+                <button onclick="openDonatePage()">💜 Donate - Pay with MyPIVXWallet</button>
+                <br>
+                Thank you! 💜
+              </h5>
             </div>
             <div id="keypair" class="tabcontent">
               <input style="width: 0px; height: 0px; opacity: 0;" type="text" id="clipboard">
@@ -192,7 +208,7 @@
             <div id="Transaction" class="tabcontent">
               <div id='errorNotice'></div>
               <div class='pullDown' style='clear:both;'>
-                <div onclick='toggleDropDown("simpleTransactions")'>Create Simple Transactions<span
+                <div id="simpleTransactionsDropdown" onclick='toggleDropDown("simpleTransactions")'>Create Simple Transactions<span
                     style='float:right;'>▼</span></div>
                 <div id='simpleTransactions' style='display:none'>
                   <label>Address</label>
@@ -360,7 +376,15 @@
       }, 1000);
     }
 
-    let viewPrivKey = false;  
+    function openDonatePage() {
+      document.getElementById("txTab").click();
+      if (document.getElementById("simpleTransactions").style.display === 'none')
+        document.getElementById("simpleTransactionsDropdown").click();
+      document.getElementById("address1s").value = donationAddress;
+      document.getElementById("value1s").focus();
+    }
+
+    let viewPrivKey = false;
     function toggleKeyView() {
       viewPrivKey = !viewPrivKey;
       document.getElementById('guiViewKey').innerHTML     = viewPrivKey  ? 'View Public Key' : 'View Private Key';
