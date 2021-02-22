@@ -57,7 +57,7 @@
   <div id="page-container">
     <div id="content-wrap">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
-        <img onclick="playMusic()" class="navbar-brand noselect" src='assets/logo.png' alt="PIVX"
+        <img id="navlogo" onclick="playMusic()" class="navbar-brand noselect" src='assets/logo.png' alt="PIVX"
           style='vertical-align: middle;width:150px;display:inline'>
         <button id="navbarToggler" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -365,6 +365,7 @@
       if (audio === null) {
         audio = new Audio('assets/music.mp3');
         audio.play();
+        document.getElementById("navlogo").className += " discoFilter";
       } else
       if (audio.paused) {
         audio.play();

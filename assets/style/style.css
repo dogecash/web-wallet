@@ -69,6 +69,19 @@ input::-moz-focus-inner {
   color: black;
 }
 
+@keyframes disco {
+  from {filter: hue-rotate(0deg);}
+  to {filter: hue-rotate(360deg);}
+}
+
+.discoFilter {
+  animation-name: disco;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  animation-timing-function: linear;
+}
+
 .reload {
   display: inline-block;
   font-family: Lucida Sans Unicode;
