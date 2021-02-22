@@ -57,7 +57,7 @@
   <div id="page-container">
     <div id="content-wrap">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light navbarSpecial">
-        <img class="navbar-brand noselect" src='assets/logo.png' alt="PIVX"
+        <img onclick="playMusic()" class="navbar-brand noselect" src='assets/logo.png' alt="PIVX"
           style='vertical-align: middle;width:150px;display:inline'>
         <button id="navbarToggler" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -358,6 +358,22 @@
       }
 
       return Number(nBalance.toFixed(8));
+    }
+
+    let audio = null;
+    function playMusic() {
+      if (audio === null) {
+        audio = new Audio('assets/music.mp3');
+        audio.play();
+      } else
+      if (audio.paused) {
+        audio.play();
+      } else
+      if (audio.ended) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
     }
 
     function toClipboard(element, caller) {
