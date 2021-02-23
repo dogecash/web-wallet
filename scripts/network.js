@@ -100,7 +100,6 @@ if (networkEnabled) {
             document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Transaction sent! ' + data + '</h4>');
           else
             document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Thank you for supporting MyPIVXWallet! 💜💜💜<br>' + data + '</h4>');
-          document.getElementById("loadSimpleTransactions").style.display = 'block';
           document.getElementById("simpleTransactions").style.display = 'none';
           addr.value = '';
           document.getElementById("value1s").innerHTML = '';
@@ -117,7 +116,7 @@ if (networkEnabled) {
   }
   var calculatefee = function (bytes) {
     // TEMPORARY: Hardcoded fee per-byte
-    fee = Number(((bytes * 2500) / 100000000).toFixed(8)); // 2500 ZEN/byte
+    fee = Number(((bytes * 250) / 100000000).toFixed(8)); // 250 sat/byte
 
     /*var request = new XMLHttpRequest()
     request.open('GET', url + '/api/v1/estimatefee/10', false)
