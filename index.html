@@ -447,7 +447,7 @@
     async function generateVanityWallet() {
       // Generate a vanity address with the given prefix
       let strPrefix = document.getElementById('prefix');
-      if (strPrefix.value.length === 0) {
+      if (strPrefix.value.length === 0 || strPrefix.style.display === 'none') {
         // No prefix, display the intro!
         strPrefix.style.display = 'block';
         document.getElementById('genKeyWarning').style.display = 'none';
