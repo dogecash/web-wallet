@@ -179,14 +179,20 @@ input::-moz-focus-inner {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #2b0950;
+  background-color: #2b09508c;
   color: #96a8b6;
   height: 3rem;
   text-align: center;
+  border-top-style: solid;
+  border-top-color: #521186;
+  border-width: 1px;
 }
 
 .navbarSpecial{
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(16,12,24,1) 35%, #521186 100%);
+  border-bottom-color: #521186;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 
 /*Breakpoints */
