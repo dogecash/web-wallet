@@ -96,8 +96,10 @@ importWallet = function (newWif = false) {
     //Wallet Import Format to Private Key
     var privateKeyWIF = newWif || document.getElementById("privateKey").value;
     privateKeyForTransactions = privateKeyWIF;
-    document.getElementById("privateKey").value = "";
-    toggleWallet();
+    if (!newWif) {
+      document.getElementById("privateKey").value = "";
+      toggleWallet();
+    }
     var byteArryConvert = from_b58(privateKeyWIF, MAP)
     var droplfour = byteArryConvert.slice(0, byteArryConvert.length - 4);
     var key = droplfour.slice(1, droplfour.length);
