@@ -96,6 +96,8 @@ importWallet = function (newWif = false) {
     //Wallet Import Format to Private Key
     var privateKeyWIF = newWif || document.getElementById("privateKey").value;
     privateKeyForTransactions = privateKeyWIF;
+    document.getElementById("privateKey").value = "";
+    toggleWallet();
     var byteArryConvert = from_b58(privateKeyWIF, MAP)
     var droplfour = byteArryConvert.slice(0, byteArryConvert.length - 4);
     var key = droplfour.slice(1, droplfour.length);
@@ -170,6 +172,7 @@ importWallet = function (newWif = false) {
     // Set view key as public and refresh QR code
     viewPrivKey = true;
     toggleKeyView();
+
     // Update identicon
     document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
     jdenticon();
