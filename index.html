@@ -33,9 +33,7 @@
   <link rel="stylesheet" type="text/css" href="assets/style/style.css">
   <script type="text/javascript" src="assets/bootstrap-4.5.0/js/jquery.js"></script>
   <script type="text/javascript" src="assets/bootstrap-4.5.0/js/bootstrap.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.0/dist/jdenticon.min.js" async
-        integrity="sha384-VngWWnG9GS4jDgsGEUNaoRQtfBGiIKZTiXwm9KpgAeaRn6Y/1tAFiyXqSzqC8Ga/" crossorigin="anonymous">
-  </script>
+  <script type="text/javascript" src="scripts/libs/jdenticon.min.js"></script>
 
   <!--- IMPORTANT: CHAIN PARAMS BELOW, DO NOT EDIT UNLESS YOU'RE ABSOLUTELY CERTAIN YOU KNOW WHAT YOU'RE DOING  --->
   <script>
@@ -598,15 +596,13 @@
     }
 
     window.onload = (() => {
-      // jdenticon might be missing in offline mode; this is fine
-      if (!jdenticon) return;
       // Configure Identicon
       jdenticon.configure({
         saturation: {
           color: 0.8
         }
       });
-    })
+    });
 
     setInterval(refreshChainData, 15000);
   </script>

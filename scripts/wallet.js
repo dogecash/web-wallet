@@ -171,10 +171,9 @@ importWallet = function (newWif = false) {
     viewPrivKey = true;
     toggleKeyView();
     // Update identicon
-    if (jdenticon) {
-      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
-      jdenticon();
-    }
+    document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+    jdenticon();
+
     if (!newWif) {
         // Hide the encryption warning
       document.getElementById('genKeyWarning').style.display = 'block';
@@ -317,10 +316,8 @@ generateWallet = async function (strPrefix = false) {
       document.getElementById('clipboard').value = pubKey;
 
       // Update identicon
-      if (jdenticon) {
-        document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
-        jdenticon();
-      }
+      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+      jdenticon();
       
       document.getElementById('guiWallet').style.display = 'block';
       viewPrivKey = false;
