@@ -148,7 +148,8 @@ importWallet = function (newWif = false) {
     //Display Text
     document.getElementById('guiAddress').innerHTML = pubKey;
     document.getElementById('guiWallet').style.display = 'block';
-    document.getElementById('PrivateTxt').innerHTML = privateKeyWIF;
+    location.href = "#genKeyWarning";
+    document.getElementById('PrivateTxt').value = privateKeyWIF;
     document.getElementById('guiAddress').innerHTML = pubKey;
     //QR Codes
     var typeNumber = 4;
@@ -292,7 +293,7 @@ generateWallet = async function (strPrefix = false) {
     if (strPrefix === false || (strPrefix !== false && pubKey.toLowerCase().startsWith(strPrefix))) {
       //Display Text
       document.getElementById('genKeyWarning').style.display = 'block';
-      document.getElementById('PrivateTxt').innerHTML = privateKeyWIF;
+      document.getElementById('PrivateTxt').value = privateKeyWIF;
       document.getElementById('guiAddress').innerHTML = pubKey;
       // New address... so there definitely won't be a balance
       document.getElementById('guiBalance').innerHTML = "0";
