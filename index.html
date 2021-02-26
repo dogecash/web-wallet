@@ -151,7 +151,7 @@
                     <h5>
                       MyPIVXWallet has <b>no custody</b> over your funds. You are in full ownership of your keys and your PIV.
                     </h5>
-                    <span class="purple-icon-link">
+                    <span style="cursor: pointer;" onclick="window.location.href='https://forum.pivx.org/threads/mypivxwallet-an-easy-open-source-self-sovereign-pivx-wallet.873/'" class="purple-icon-link">
                       Know more<span class="link-icon link-icon-suffix"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23.328 16.707L13.121 26.914a.5.5 0 01-.707 0l-2.828-2.828a.5.5 0 010-.707L16.964 16 9.586 8.621a.5.5 0 010-.707l2.828-2.828a.5.5 0 01.707 0l10.207 10.207a1 1 0 010 1.414z"></path></svg></span>
                     </span>
                   </div>
@@ -170,7 +170,7 @@
                     <h5>
                       You can generate cryptographically-secure addresses with your browser and hardware.
                     </h5>
-                    <span class="purple-icon-link">
+                    <span style="cursor: pointer;" onclick="window.location.href='https://forum.pivx.org/threads/mypivxwallet-an-easy-open-source-self-sovereign-pivx-wallet.873/'" class="purple-icon-link">
                       Know more<span class="link-icon link-icon-suffix"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23.328 16.707L13.121 26.914a.5.5 0 01-.707 0l-2.828-2.828a.5.5 0 010-.707L16.964 16 9.586 8.621a.5.5 0 010-.707l2.828-2.828a.5.5 0 01.707 0l10.207 10.207a1 1 0 010 1.414z"></path></svg></span>
                     </span>
                   </div>
@@ -189,7 +189,7 @@
                     <h5>
                       MyPIVXWallet is completely open-source, available on the PIVX Labs github.
                     </h5>
-                    <span class="purple-icon-link">
+                    <span style="cursor: pointer;" onclick="window.location.href='https://forum.pivx.org/threads/mypivxwallet-an-easy-open-source-self-sovereign-pivx-wallet.873/'" class="purple-icon-link">
                       Know more<span class="link-icon link-icon-suffix"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23.328 16.707L13.121 26.914a.5.5 0 01-.707 0l-2.828-2.828a.5.5 0 010-.707L16.964 16 9.586 8.621a.5.5 0 010-.707l2.828-2.828a.5.5 0 01.707 0l10.207 10.207a1 1 0 010 1.414z"></path></svg></span>
                     </span>
                   </div>
@@ -208,7 +208,7 @@
                     <h5>
                       MyPIVXWallet is built with love without any fees, privacy intrusions or advertising.
                     </h5>
-                    <span class="purple-icon-link">
+                    <span style="cursor: pointer;" onclick="window.location.href='https://forum.pivx.org/threads/mypivxwallet-an-easy-open-source-self-sovereign-pivx-wallet.873/'" class="purple-icon-link">
                       Know more<span class="link-icon link-icon-suffix"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23.328 16.707L13.121 26.914a.5.5 0 01-.707 0l-2.828-2.828a.5.5 0 010-.707L16.964 16 9.586 8.621a.5.5 0 010-.707l2.828-2.828a.5.5 0 01.707 0l10.207 10.207a1 1 0 010 1.414z"></path></svg></span>
                     </span>
                   </div>
@@ -255,7 +255,7 @@
                   
                   <div class="col-md-12 dashboard-title">
                     <h3 class="pivx-bold-title" style="font-size:38px;"><span>Create a</span>New Wallet</h3>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
+                    <p>This will create a new, random PIVX wallet that will contain no initial funds, you may transfer to-and-from this wallet with ease.</p>
                   </div>
 
 
@@ -324,7 +324,7 @@
                   <div class="graybox col-md-4 float-left" style="height: 99%;  background: linear-gradient(50deg, #400c6a 0%, #521186 90%); text-align:center;">
                     <div id="PrivateQR"  style="display: none; padding: 10px;"></div>
                     <div id="PublicQR"   style="display: none; padding: 10px;"></div>
-                    <textarea id='PrivateTxt' style="display: none;" class="form-control private-key-area">
+                    <textarea id='PrivateTxt' style="display: none; color: black;" disabled class="form-control private-key-area">
                     
                     </textarea>
                     <button class="pivx-button-big" onclick="toggleKeyView()">
@@ -357,7 +357,7 @@
                   <div class="col-md-12 dashboard-title">
                     <h3 class="pivx-bold-title" style="font-size:38px;"><span>Create a new</span>Vanity Wallet</h3>
                     <span class="badge badge-warning">Experimental</span></h1>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
+                    <p>This will create a PIVX wallet with a customized prefix of your choosing, requiring more processing power to generate such addresses, it is recommended to generate a prefix of less than 4 characters, for example: "DAD" is a possible address prefix.</p>
                   </div>
 
 
@@ -385,7 +385,10 @@
                   
                   <div class="col-md-12 dashboard-title">
                     <h3 class="pivx-bold-title" style="font-size:38px;"><span>Go to</span>My Wallet</h3>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
+                    <p>This will import a PIVX wallet that you hold via it's private key, loading the address and pulling your existing balance, if any, from an explorer node.
+                      <br>
+                      <span style="opacity: 0.75; font-size: small;">*Note: MPW developers can NOT access your wallet, this wallet runs purely in YOUR browser using JavaScript.</span>
+                    </p>
                   </div>
 
 
