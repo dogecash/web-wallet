@@ -448,6 +448,10 @@
                   <br>
                   <label>Amount</label><br>
                   <input style="text-align: center;" type="number" min="0" id="value1s">
+                  <div id="reqDescDisplay" style="display: none;">
+                    <label>Description (from the merchant)</label><br>
+                    <input style="text-align: center;" type="text" disabled id="reqDesc">
+                  </div>
                   <br>
                   <div id='HumanReadable'></div>
                   <br>
@@ -613,6 +617,19 @@
       return Number(nBalance.toFixed(8));
     }
 
+    // URL-Query request processing
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let requestTo;
+    let requestAmount;
+    // Check for a payment request
+    if (urlParams.has('pay') && urlParams.has('amount')) {
+      requestTo     = urlParams.get('pay');
+      requestAmount = parseFloat(urlParams.get('amount'));
+      console.log(requestTo + " " + requestAmount);
+      // We have our payment request info, wait until the page is fully loaded then display the payment request via .onload
+    }
+
     let audio = null;
     function playMusic() {
       if (audio === null) {
@@ -756,6 +773,13 @@
     }
     function createSimpleTransation() {
       if (!networkEnabled) return alert("Cannot create Simple Transactions in offline mode; this requires an explorer to sync your balance (UTXOs), please enable Networking to use this feature! Otherwise, use 'Advanced Transactions'");
+      if (!publicKeyForNetwork) {
+        if (hasEncryptedWallet())
+          alert("Please unlock your wallet before sending transactions!");
+        else
+          alert("Please import/create your wallet before sending transactions!");
+        return;
+      }
       let address = document.getElementById("address1s").value;
       let value = Number(document.getElementById("value1s").value);
       let genIt = document.getElementById("genIt");
@@ -764,6 +788,8 @@
         document.getElementById("HumanReadable").innerHTML = "";
         document.getElementById("value1s").value = "";
         document.getElementById("address1s").value = "";
+        document.getElementById('reqDesc').value = '';
+        document.getElementById('reqDescDisplay').style.display = 'none';
         return;
       }
       let nBalance = getBalance();
@@ -865,6 +891,24 @@
           color: 0.8
         }
       });
+      // Configure payment processor
+      if (requestTo && requestAmount) {
+        // Open 'Create Transaction' menu
+        document.getElementById('txTab').click();
+        if (document.getElementById("simpleTransactions").style.display === 'none')
+          document.getElementById("simpleTransactionsDropdown").click();
+        // Pre-fill inputs
+        document.getElementById('address1s').value = requestTo;
+        document.getElementById('value1s').value  = requestAmount;
+        // Payment request 'desc' is optional
+        if (urlParams.has('desc')) {
+          document.getElementById('reqDescDisplay').style.display = 'block';
+          document.getElementById('reqDesc').value = urlParams.get('desc');
+        } else {
+          document.getElementById('reqDesc').value = '';
+          document.getElementById('reqDescDisplay').style.display = 'none';
+        }
+      }
     });
 
     setInterval(refreshChainData, 15000);
