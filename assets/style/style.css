@@ -81,9 +81,13 @@ input::-moz-focus-inner {
   border: 0; 
 }
 
-.graybox {
-  background-color: white;
+.large-box {
+  background: rgba(43,9,80,0.75);
   border-radius: 8px;
+  border-color: #5b00a0;
+  border-width: 1px;
+  border-style: solid;
+  margin: 5px;
 }
 
 .modal {

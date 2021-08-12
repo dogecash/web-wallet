@@ -293,10 +293,10 @@
 
               <!-- WALLET FEATURES -->
               <div id="guiWallet" style="display: none;">
-                <div id="banners" style="height: 160px; width: 100%; display: flex; flex-wrap: wrap; color: white; margin-bottom: 250px;">
+                <div id="banners" style="height: 160px; width: 100%; display: flex; justify-content: space-evenly;">
 
                   <!-- WALLET FEATURE -->
-                  <div class="graybox col-md-4 float-left" style="height: 99%;  background: linear-gradient(50deg, #2c0b4d 0%, #400c6a 80%);">
+                  <div class="large-box col-md-4">
                     <h3 class="noselect" style="margin: 10px; position: relative; left: 165px; cursor: default;">Address</h3>
                     <br>
                     <div>
@@ -311,36 +311,27 @@
                   <!-- // WALLET FEATURE -->
 
                   <!-- WALLET FEATURE -->
-                  <div class="graybox col-md-4 float-left" style="height: 99%;  background: linear-gradient(50deg, #400c6a 0%, #521186 90%);">
+                  <div class="large-box col-md-4">
                     <h3 class="noselect" style="margin: 10px; position: relative; left: 135px; cursor: default;">Balance &nbsp;&nbsp;<span id="balanceReload" class="reload noselect" onclick="refreshChainData()">&#x21bb;</span></h3>
                     <div>
                       <div style="display: inline-block; position: relative; width: 65px; height: 65px; left: 30px; bottom: 5px; border-style: solid; border-radius: 1000px; border-width: 3px; background-size: cover; background-image: url(assets/logo-circle.png);"></div>
                       <p id="guiBalanceBox" style="display: inline-block; width: 50%; position: relative; right: -70px; bottom: 25px; font-size: x-large;"><b id="guiBalance">---</b> PIV</p>
                     </div>
                   </div>
-                  <!-- // WALLET FEATURE -->
-
-                  <!-- WALLET FEATURE -->
-                  <div class="graybox col-md-4 float-left" style="height: 99%;  background: linear-gradient(50deg, #400c6a 0%, #521186 90%); text-align:center;">
-                    <div id="PrivateQR"  style="display: none; padding: 10px;"></div>
-                    <div id="PublicQR"   style="display: none; padding: 10px;"></div>
-                    <textarea id='PrivateTxt' style="display: none; color: black;" disabled class="form-control private-key-area">
-                    
-                    </textarea>
-                    <button class="pivx-button-big" onclick="toggleKeyView()">
-                                <span class="buttoni-icon"><i class="far fa-eye" style="margin-top:4px;"></i></span>
-                                <span class="buttoni-text" id="guiViewKey">Private Key</span>
-                                <span class="buttoni-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23.328 16.707L13.121 26.914a.5.5 0 01-.707 0l-2.828-2.828a.5.5 0 010-.707L16.964 16 9.586 8.621a.5.5 0 010-.707l2.828-2.828a.5.5 0 01.707 0l10.207 10.207a1 1 0 010 1.414z"></path></svg></span>
-                      </button>
-                  </div>
-                  <!-- // WALLET FEATURE -->
-
-                 
-                  <div class="col-md-12 float-left" style="margin-top: 54px;">
-                  <p style="color:white;">Please <b>AVOID</b> sending to/from Shielded or Cold Staking addresses using this wallet - this functionality is unsupported at this moment.</p>
-                  </div>
                 </div>
-              
+
+                <!-- // WALLET FEATURE -->
+                <div class="large-box col-md-4" style="height: 99%; text-align:center;margin-left: auto;margin-right: auto;">
+                  <div id="PrivateQR" style="display: none; padding: 10px;"><img src="" width="82" height="82"></div>
+                  <div id="PublicQR" style="display: block; padding: 10px;"><img src="" width="82" height="82"></div>
+                  <textarea id="PrivateTxt" style="display: none; color: black; font-size: 9px !important; text-align: center; line-height: 20px;" disabled="" class="form-control private-key-area">                    
+                  </textarea>
+                  <button class="pivx-button-big" onclick="toggleKeyView()">
+                              <span class="buttoni-icon"><i class="far fa-eye" style="margin-top:4px;"></i></span>
+                              <span class="buttoni-text" id="guiViewKey">Pubkey QR</span>
+                              <span class="buttoni-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23.328 16.707L13.121 26.914a.5.5 0 01-.707 0l-2.828-2.828a.5.5 0 010-.707L16.964 16 9.586 8.621a.5.5 0 010-.707l2.828-2.828a.5.5 0 01.707 0l10.207 10.207a1 1 0 010 1.414z"></path></svg></span>
+                    </button>
+                </div>
               </div>
               <!-- WALLET FEATURES -->
 
@@ -376,7 +367,7 @@
               <br>
 
               <!-- ACCESS WALLET -->
-              <div class="dashboard-item" style="margin-bottom:100px;">
+              <div id="accessWallet" class="dashboard-item" style="margin-bottom:100px;">
                 <div class="container">
 
                   <div class="coinstat-icon">
@@ -438,10 +429,13 @@
               <!-- // PIVX TITLE SECTION -->
 
               <div id='errorNotice' class="col-md-12 float-left" style="margin-top:10px;"></div>
+              <div class="col-md-12" style="margin-top: 54px;">
+                <p style="color: white; opacity: 0.6; text-align: center;">Please <b>AVOID</b> sending to Shielded or Cold Staking addresses using this wallet - this functionality is currently unsupported.</p>
+              </div>
               <div class='pullDown' style='clear:both;'>
                 <div id="simpleTransactionsDropdown" onclick='toggleDropDown("simpleTransactions")'>Create Simple Transactions<span
                     style='float:right;'>▼</span></div>
-                <div id='simpleTransactions' style='display:none'>
+                <div id='simpleTransactions' style='display: block'>
                   <br>
                   <label>Address</label><br>
                   <input style="min-width: 375px; max-width: 90%; font-family: monospace; text-align: center;" type="text" id="address1s">
@@ -676,11 +670,26 @@
     let viewPrivKey = false;
     function toggleKeyView() {
       viewPrivKey = !viewPrivKey;
-      document.getElementById('guiViewKey').innerHTML     = viewPrivKey  ? 'Public Key' : 'Private Key';
+      document.getElementById('guiViewKey').innerHTML     = viewPrivKey  ? 'Privkey QR' : 'Pubkey QR';
       document.getElementById('PrivateTxt').style.display = viewPrivKey  ? 'block' : 'none';
       document.getElementById('PrivateQR').style.display  = viewPrivKey  ? 'block' : 'none';
       document.getElementById('PublicQR').style.display   = !viewPrivKey ? 'block' : 'none';
     }
+
+    function hideAllWalletOptions() {
+      // Hide and Reset the Vanity address input
+      document.getElementById('prefix').value = "";
+      document.getElementById('prefix').style.display = 'none';
+      // Hide 'generate wallet'
+      document.getElementById('generateWallet').style.display = 'none';
+      // Hide 'import wallet'
+      document.getElementById('importWallet').style.display = 'none';
+      // Hide 'vanity wallet'
+      document.getElementById('generateVanityWallet').style.display = 'none';
+      // Hide 'access wallet'
+      document.getElementById('accessWallet').style.display = 'none';
+    }
+
     function toggleWallet() {
       var toggle = document.getElementById("wToggle").innerHTML;
       // Hide and Reset the Vanity address input

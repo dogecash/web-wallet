@@ -187,6 +187,9 @@ importWallet = function (newWif = false) {
     // Load UTXOs from explorer
     if (networkEnabled)
       getUnspentTransactions();
+    
+    // Hide all wallet starter options
+    hideAllWalletOptions();
   }
 }
 
@@ -327,6 +330,8 @@ generateWallet = async function (strPrefix = false) {
       
       document.getElementById('guiWallet').style.display = 'block';
       viewPrivKey = false;
+
+      hideAllWalletOptions();
       // VANITY ONLY: If we reached here during a vanity search, we found our match!
       nRet.pubkey       = pubKey;
       nRet.privkey      = privateKeyWIF;
