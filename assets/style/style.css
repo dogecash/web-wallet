@@ -259,7 +259,7 @@ input::-moz-focus-inner {
 .warning-message{ display:none; background-color:#9021fe; padding-top:20px; padding-bottom:20px; margin-bottom:15px;  }
 .warning-message p{ margin-bottom:0px; }
 .warning-message a { color: #ffffff; font-weight: bold; text-decoration: none; background-color: transparent; }
-.alert-danger { color: #fff; background-color: #4b1282; border-color: #4c1382; }
+.alert-danger { color: #fff; background-color: #4b1282; border-color: #8300ff; }
 
 /*PIVX TEXT CUSTOMS*/
 .pivx-bold-title{ line-height: 1.35em; font-size: calc(37.88235px + .70588vw); font-weight: 700; font-family: Montserrat,sans-serif;;  }
