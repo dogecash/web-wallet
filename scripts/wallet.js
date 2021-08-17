@@ -70,19 +70,19 @@ importWallet = function (newWif = false) {
   if (walletConfirm) {
     walletAlreadyMade++;
     // Wallet Import Format to Private Key
-    var privateKeyWIF = newWif || document.getElementById("privateKey").value;
-    privateKeyForTransactions = privateKeyWIF;
+    const privkeyWIF = newWif || document.getElementById("privateKey").value;
+    privateKeyForTransactions = privkeyWIF;
     if (!newWif) {
       document.getElementById("privateKey").value = "";
       toggleWallet();
     }
-    var byteArryConvert = from_b58(privateKeyWIF)
-    var droplfour = byteArryConvert.slice(0, byteArryConvert.length - 4);
-    var key = droplfour.slice(1, droplfour.length);
-    var privkeyBytes = key.slice(0, key.length - 1);
+    const byteArryConvert = from_b58(privkeyWIF);
+    const droplfour = byteArryConvert.slice(0, byteArryConvert.length - 4);
+    const key = droplfour.slice(1, droplfour.length);
+    const privkeyBytes = key.slice(0, key.length - 1);
     if (debug) {
       // WIF to Private Key
-      console.log(Crypto.util.bytesToHex(privateKeyWIF));
+      console.log(Crypto.util.bytesToHex(privkeyWIF));
       console.log(Crypto.util.bytesToHex(byteArryConvert));
       console.log(Crypto.util.bytesToHex(droplfour));
       console.log(Crypto.util.bytesToHex(privkeyBytes));
@@ -98,7 +98,7 @@ importWallet = function (newWif = false) {
     publicKeyBytes.unshift(0x04);
     let pubkeyExt = publicKeyBytes;
     if (bitjs.compressed == true) {
-      let publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
+      const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
       if (y.isEven()) {
         publicKeyBytesCompressed.unshift(0x02)
       } else {
@@ -123,7 +123,7 @@ importWallet = function (newWif = false) {
     console.log(publicKeyForNetwork);
     document.getElementById('guiAddress').innerHTML = publicKeyForNetwork;
     document.getElementById('guiWallet').style.display = 'block';
-    document.getElementById('PrivateTxt').value = privateKeyWIF;
+    document.getElementById('PrivateTxt').value = privkeyWIF;
     document.getElementById('guiAddress').innerHTML = publicKeyForNetwork;
 
     // QR Codes
@@ -131,7 +131,7 @@ importWallet = function (newWif = false) {
     const typeNumber = 4;
     const errorCorrectionLevel = 'L';
     const qrPriv = qrcode(typeNumber, errorCorrectionLevel);
-    qrPriv.addData(privateKeyWIF);
+    qrPriv.addData(privkeyWIF);
     qrPriv.make();
     document.getElementById('PrivateQR').innerHTML = qrPriv.createImgTag();
 
@@ -210,7 +210,7 @@ generateWallet = async function (strPrefix = false) {
     pubkeyBytes.unshift(0x04);
     let pubkeyExt = pubkeyBytes;
     if (bitjs.compressed == true) {
-      let publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
+      const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
       if (y.isEven()) {
         publicKeyBytesCompressed.unshift(0x02)
       } else {
@@ -265,7 +265,7 @@ generateWallet = async function (strPrefix = false) {
       console.log(publicKeyForNetwork)
     }
     // VANITY ONLY: During a search, we don't update the DOM until a match is found, or the renderer consumes a shitload of resources.
-    let nRet = {
+    const nRet = {
       pubkey: null,
       privkey: null,
       vanity_match: false
