@@ -268,8 +268,8 @@ input::-moz-focus-inner {
 /*PIVX FEATURES SECTION*/
 .pivx-feature-father{ margin-top:90px; }
 .pivx-feature-interior{ background: url(/build/images/feature_box_bg.78eae374.svg),linear-gradient( 90deg ,#2b1542,#230f3c);padding:25px; text-align:center; border-radius: 10px; }
-.pivx-feature-interior h4{font-size: 24px; font-weight: 600;     margin-top: 19px;}
-.pivx-feature-interior h5{ text-indent: 30px; opacity: 0.65; padding: .7rem 0 1.25rem; line-height: 1.75em; font-size: 16px; font-weight: 300!important; }
+.pivx-feature-interior h4{ font-size: 24px; font-weight: 600; margin-top: 19px;}
+.pivx-feature-interior h5{ opacity: 0.65; padding: .7rem 0 1.25rem; line-height: 1.75em; font-size: 16px; font-weight: 300!important; }
 .feature-icon img{ width: 146px; height: auto;  }
 .feature-icon{ text-align: center; width: 100%!important; margin-top: -90px; min-height: 150px; }
 .features-section{ margin-top: 0px;  }
