@@ -301,7 +301,7 @@
                     <br>
                     <div>
                       <canvas id="identicon" class="innerShadow" width="65" height="65" data-jdenticon-value="" style="background-color: white; border-color: white; border-width: 3px; border-style: solid; border-radius: 1000px; position: relative; top: -30px; left: 15px;"></canvas>
-                      <b id="guiAddress" style="line-break: anywhere; width: 60%; display: inline-block; right: -30px; position: relative; font-size: smaller; bottom: 50px; word-break: break-all; font-family: monospace; font-weight: 300;">---</b>
+                      <b id="guiAddress" style="line-break: anywhere; width: 60%; display: inline-block; right: -30px; position: relative; font-size: smaller; bottom: 50px; word-break: break-all; font-family: monospace; font-weight: 300;">~</b>
                       <b id="guiQRButton" style=" width: 60%; display: inline-block; right: -105px; position: relative; font-size: large; bottom: 40px;">
                         <i data-toggle="modal" data-target="#qrModal" style="cursor: pointer; margin-right: 15px;" class="fas fa-qrcode"></i>
                         <i onclick="toClipboard('guiAddress', 'guiAddressCopy')" id="guiAddressCopy" style="cursor: pointer; margin-right: 15px;" class="fas fa-clipboard" ></i>
@@ -315,7 +315,7 @@
                     <h3 class="noselect" style="margin: 10px; position: relative; left: 135px; cursor: default;">Balance &nbsp;&nbsp;<span id="balanceReload" class="reload noselect" onclick="refreshChainData()">&#x21bb;</span></h3>
                     <div>
                       <div style="display: inline-block; position: relative; width: 65px; height: 65px; left: 30px; bottom: 5px; border-style: solid; border-radius: 1000px; border-width: 3px; background-size: cover; background-image: url(assets/logo-circle.svg);"></div>
-                      <p id="guiBalanceBox" style="display: inline-block; width: 50%; position: relative; right: -70px; bottom: 25px; font-size: x-large;"><b id="guiBalance">---</b> PIV</p>
+                      <p id="guiBalanceBox" style="display: inline-block; width: 50%; position: relative; right: -70px; bottom: 25px; font-size: x-large;"><b id="guiBalance">~</b> PIV</p>
                     </div>
                   </div>
                 </div>
@@ -750,8 +750,8 @@
         // No prefix, display the intro!
         strPrefix.style.display = 'block';
         document.getElementById('genKeyWarning').style.display = 'none';
-        document.getElementById('PrivateTxt').innerHTML = "---";
-        document.getElementById('guiAddress').innerHTML = "---";
+        document.getElementById('PrivateTxt').innerHTML = "~";
+        document.getElementById('guiAddress').innerHTML = "~";
       } else {
         // Ensure the input is base58 compatible
         for (const char of strPrefix.value) {
