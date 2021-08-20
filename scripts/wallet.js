@@ -96,17 +96,13 @@ importWallet = function (newWif = false) {
     let publicKeyBytes = EllipticCurve.integerToBytes(x, 32);
     publicKeyBytes = publicKeyBytes.concat(EllipticCurve.integerToBytes(y, 32));
     publicKeyBytes.unshift(0x04);
-    let pubkeyExt = publicKeyBytes;
-    if (bitjs.compressed == true) {
-      const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
-      if (y.isEven()) {
-        publicKeyBytesCompressed.unshift(0x02)
-      } else {
-        publicKeyBytesCompressed.unshift(0x03)
-      }
-      pubkeyExt = publicKeyBytesCompressed;
+    const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
+    if (y.isEven()) {
+      publicKeyBytesCompressed.unshift(0x02)
+    } else {
+      publicKeyBytesCompressed.unshift(0x03)
     }
-    const pubkeyHex = Crypto.util.bytesToHex(pubkeyExt).toUpperCase();
+    const pubkeyHex = Crypto.util.bytesToHex(publicKeyBytesCompressed).toUpperCase();
     const pubKeyHashing = new jsSHA("SHA-256", "HEX", { "numRounds": 1 });
     pubKeyHashing.update(pubkeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
@@ -120,7 +116,6 @@ importWallet = function (newWif = false) {
     publicKeyForNetwork = to_b58(Crypto.util.hexToBytes(pubKeyPreBase));
 
     // Display Text
-    console.log(publicKeyForNetwork);
     document.getElementById('guiAddress').innerHTML = publicKeyForNetwork;
     document.getElementById('guiWallet').style.display = 'block';
     document.getElementById('PrivateTxt').value = privkeyWIF;
@@ -133,13 +128,18 @@ importWallet = function (newWif = false) {
     const qrPriv = qrcode(typeNumber, errorCorrectionLevel);
     qrPriv.addData(privkeyWIF);
     qrPriv.make();
-    document.getElementById('PrivateQR').innerHTML = qrPriv.createImgTag();
+    const qrPrivDOM = document.getElementById('PrivateQR');
+    qrPrivDOM.innerHTML = qrPriv.createImgTag();
+    qrPrivDOM.firstChild.style.borderRadius = '8px';
 
     // Public Key
     const qrPub = qrcode(typeNumber, errorCorrectionLevel);
     qrPub.addData(publicKeyForNetwork);
     qrPub.make();
-    document.getElementById('PublicQR').innerHTML = qrPub.createImgTag();
+    const qrPubDOM = document.getElementById('PublicQR');
+    qrPubDOM.innerHTML = qrPub.createImgTag();
+    qrPubDOM.firstChild.style.borderRadius = '8px';
+    // Pubkey Modal
     document.getElementById('ModalQRLabel').innerHTML = 'pivx:' + publicKeyForNetwork;
     const modalQR = document.getElementById('ModalQR');
     modalQR.innerHTML = qrPub.createImgTag();
@@ -208,17 +208,13 @@ generateWallet = async function (strPrefix = false) {
     let pubkeyBytes = EllipticCurve.integerToBytes(x, 32);
     pubkeyBytes = pubkeyBytes.concat(EllipticCurve.integerToBytes(y, 32));
     pubkeyBytes.unshift(0x04);
-    let pubkeyExt = pubkeyBytes;
-    if (bitjs.compressed == true) {
-      const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
-      if (y.isEven()) {
-        publicKeyBytesCompressed.unshift(0x02)
-      } else {
-        publicKeyBytesCompressed.unshift(0x03)
-      }
-      pubkeyExt = publicKeyBytesCompressed;
+    const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
+    if (y.isEven()) {
+      publicKeyBytesCompressed.unshift(0x02)
+    } else {
+      publicKeyBytesCompressed.unshift(0x03)
     }
-    const publicKeyHex = Crypto.util.bytesToHex(pubkeyExt).toUpperCase();
+    const publicKeyHex = Crypto.util.bytesToHex(publicKeyBytesCompressed).toUpperCase();
     const pubKeyHashing = new jsSHA("SHA-256", "HEX", { "numRounds": 1 });
     pubKeyHashing.update(publicKeyHex);
     const pubKeyHash = pubKeyHashing.getHash("HEX");
@@ -285,14 +281,17 @@ generateWallet = async function (strPrefix = false) {
       const qrPriv = qrcode(typeNumber, errorCorrectionLevel);
       qrPriv.addData('pivx:' + privateKeyForTransactions);
       qrPriv.make();
-      document.getElementById('PrivateQR').innerHTML = qrPriv.createImgTag();
-      document.getElementById('PrivateQR').style.display = 'none';
+      const qrPrivDOM = document.getElementById('PrivateQR');
+      qrPrivDOM.innerHTML = qrPriv.createImgTag();
+      qrPrivDOM.firstChild.style.borderRadius = '8px';
 
       const qrPub = qrcode(typeNumber, errorCorrectionLevel);
       qrPub.addData('pivx:' + publicKeyForNetwork);
       qrPub.make();
-      document.getElementById('PublicQR').innerHTML = qrPub.createImgTag();
-      document.getElementById('PublicQR').style.display = 'block';
+      const qrPubDOM = document.getElementById('PublicQR');
+      qrPubDOM.innerHTML = qrPub.createImgTag();
+      qrPubDOM.style.display = 'block';
+      qrPubDOM.firstChild.style.borderRadius = '8px';
       document.getElementById('ModalQRLabel').innerHTML = 'pivx:' + publicKeyForNetwork;
       const modalQR = document.getElementById('ModalQR');
       modalQR.innerHTML = qrPub.createImgTag();
