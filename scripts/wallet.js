@@ -93,14 +93,11 @@ importWallet = function (newWif = false) {
     const curvePt = curve.getG().multiply(privateKeyBigInt);
     const x = curvePt.getX().toBigInteger();
     const y = curvePt.getY().toBigInteger();
-    let publicKeyBytes = EllipticCurve.integerToBytes(x, 32);
-    publicKeyBytes = publicKeyBytes.concat(EllipticCurve.integerToBytes(y, 32));
-    publicKeyBytes.unshift(0x04);
-    const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
+    const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32);
     if (y.isEven()) {
-      publicKeyBytesCompressed.unshift(0x02)
+      publicKeyBytesCompressed.unshift(0x02);
     } else {
-      publicKeyBytesCompressed.unshift(0x03)
+      publicKeyBytesCompressed.unshift(0x03);
     }
     const pubkeyHex = Crypto.util.bytesToHex(publicKeyBytesCompressed).toUpperCase();
     const pubKeyHashing = new jsSHA("SHA-256", "HEX", { "numRounds": 1 });
@@ -205,14 +202,11 @@ generateWallet = async function (strPrefix = false) {
     const curvePt = curve.getG().multiply(privkeyBigInt);
     const x = curvePt.getX().toBigInteger();
     const y = curvePt.getY().toBigInteger();
-    let pubkeyBytes = EllipticCurve.integerToBytes(x, 32);
-    pubkeyBytes = pubkeyBytes.concat(EllipticCurve.integerToBytes(y, 32));
-    pubkeyBytes.unshift(0x04);
-    const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32)
+    const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32);
     if (y.isEven()) {
-      publicKeyBytesCompressed.unshift(0x02)
+      publicKeyBytesCompressed.unshift(0x02);
     } else {
-      publicKeyBytesCompressed.unshift(0x03)
+      publicKeyBytesCompressed.unshift(0x03);
     }
     const publicKeyHex = Crypto.util.bytesToHex(publicKeyBytesCompressed).toUpperCase();
     const pubKeyHashing = new jsSHA("SHA-256", "HEX", { "numRounds": 1 });

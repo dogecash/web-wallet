@@ -86,9 +86,6 @@ while (true) {
     const curvePt = curve.getG().multiply(privkeyBigInt);
     const x = curvePt.getX().toBigInteger();
     const y = curvePt.getY().toBigInteger();
-    let pubkeyBytes = EllipticCurve.integerToBytes(x, 32);
-    pubkeyBytes = pubkeyBytes.concat(EllipticCurve.integerToBytes(y, 32));
-    pubkeyBytes.unshift(0x04);
     const publicKeyBytesCompressed = EllipticCurve.integerToBytes(x, 32);
     if (y.isEven()) {
         publicKeyBytesCompressed.unshift(0x02);
