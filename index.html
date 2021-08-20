@@ -74,7 +74,6 @@
               <li class="nav-item"><a id='start' class="nav-link tablinks" onclick="openTab(event, 'home')">Intro</a></li>
               <li class="nav-item"><a class="nav-link tablinks" onclick="openTab(event, 'keypair')">Dashboard</a></li>
               <li class="nav-item"><a id="txTab" class="nav-link tablinks" onclick="openTab(event, 'Transaction')">Create Transaction</a></li>
-              <li style="display: none;" class="nav-item"><a class="nav-link tablinks" onclick="startNetworkTest();openTab(event, 'WalletData');">Network Data</a></li>
               <li class="nav-item"><a class="nav-link tablinks" onclick="openTab(event, 'Settings');">Settings</a></li>
             </ul>
 
@@ -593,6 +592,40 @@
     let cachedUTXOs = [];
     let cachedBlockCount = 0;
 
+    // Cached DOM elements
+    const domStart = document.getElementById("start");
+    const domNavbarToggler = document.getElementById("navbarToggler");
+    const domGuiWallet = document.getElementById('guiWallet');
+    const domGuiBalance = document.getElementById("guiBalance");
+    const domGuiBalanceBox = document.getElementById("guiBalanceBox");
+    const domBalanceReload = document.getElementById("balanceReload");
+    const domTxTab = document.getElementById("txTab");
+    const domSimpleTXs = document.getElementById("simpleTransactions");
+    const domSimpleTXsDropdown = document.getElementById("simpleTransactionsDropdown");
+    const domAddress1s = document.getElementById("address1s");
+    const domValue1s = document.getElementById("value1s");
+    const domGuiViewKey = document.getElementById('guiViewKey');
+    const domPrivateTxt = document.getElementById('PrivateTxt');
+    const domPrivateQr = document.getElementById('PrivateQR');
+    const domPublicQr = document.getElementById('PublicQR');
+    const domModalQR = document.getElementById('ModalQR');
+    const domModalQrLabel = document.getElementById('ModalQRLabel');
+    const domPrefix = document.getElementById('prefix');
+    const domWalletToggle = document.getElementById("wToggle");
+    const domGenerateWallet = document.getElementById('generateWallet');
+    const domImportWallet = document.getElementById('importWallet');
+    const domGenVanityWallet = document.getElementById('generateVanityWallet');
+    const domAccessWallet = document.getElementById('accessWallet');
+    const domVanityUiButtonTxt = document.getElementById("vanButtonText");
+    const domGenKeyWarning = document.getElementById('genKeyWarning');
+    const domGuiAddress = document.getElementById('guiAddress');
+    const domGenIt = document.getElementById("genIt");
+    const domHumanReadable = document.getElementById("HumanReadable");
+    const domReqDesc = document.getElementById('reqDesc');
+    const domReqDisplay = document.getElementById('reqDescDisplay');
+    const domIdenticon = document.getElementById("identicon");
+    const domPrivKey = document.getElementById("privateKey");
+
     function getBalance(updateGUI = false) {
       let nBalance = 0;
       for (const nUTXO of cachedUTXOs) {
@@ -604,8 +637,8 @@
       // Update the GUI too, if chosen
       if (updateGUI) {
         // Set the balance, and adjust font-size for large balance strings
-        document.getElementById("guiBalance").innerHTML = nBalance;
-        document.getElementById("guiBalanceBox").style.fontSize = nBalance.toString().length > 8 ? "large" : "x-large";
+        domGuiBalance.innerHTML = nBalance;
+        domGuiBalanceBox.style.fontSize = nBalance.toString().length > 8 ? "large" : "x-large";
       }
 
       return Number(nBalance.toFixed(8));
@@ -660,74 +693,71 @@
     }
 
     function openDonatePage() {
-      document.getElementById("txTab").click();
-      if (document.getElementById("simpleTransactions").style.display === 'none')
-        document.getElementById("simpleTransactionsDropdown").click();
-      document.getElementById("address1s").value = donationAddress;
-      document.getElementById("value1s").focus();
+      domTxTab.click();
+      if (domSimpleTXs.style.display === 'none')
+        domSimpleTXsDropdown.click();
+      domAddress1s.value = donationAddress;
+      domValue1s.focus();
     }
 
     let viewPrivKey = false;
     function toggleKeyView() {
       viewPrivKey = !viewPrivKey;
-      document.getElementById('guiViewKey').innerHTML     = viewPrivKey  ? 'Privkey QR' : 'Pubkey QR';
-      document.getElementById('PrivateTxt').style.display = viewPrivKey  ? 'block' : 'none';
-      document.getElementById('PrivateQR').style.display  = viewPrivKey  ? 'block' : 'none';
-      document.getElementById('PublicQR').style.display   = !viewPrivKey ? 'block' : 'none';
+      domGuiViewKey.innerHTML     = viewPrivKey  ? 'Privkey QR' : 'Pubkey QR';
+      domPrivateTxt.style.display = viewPrivKey  ? 'block' : 'none';
+      domPrivateQr.style.display  = viewPrivKey  ? 'block' : 'none';
+      domPublicQr.style.display   = !viewPrivKey ? 'block' : 'none';
     }
 
     function hideAllWalletOptions() {
       // Hide and Reset the Vanity address input
-      document.getElementById('prefix').value = "";
-      document.getElementById('prefix').style.display = 'none';
+      domPrefix.value = "";
+      domPrefix.style.display = 'none';
       // Hide 'generate wallet'
-      document.getElementById('generateWallet').style.display = 'none';
+      domGenerateWallet.style.display = 'none';
       // Hide 'import wallet'
-      document.getElementById('importWallet').style.display = 'none';
+      domImportWallet.style.display = 'none';
       // Hide 'vanity wallet'
-      document.getElementById('generateVanityWallet').style.display = 'none';
+      domGenVanityWallet.style.display = 'none';
       // Hide 'access wallet'
-      document.getElementById('accessWallet').style.display = 'none';
+      domAccessWallet.style.display = 'none';
     }
 
     function toggleWallet() {
-      var toggle = document.getElementById("wToggle").innerHTML;
+      var toggle = domWalletToggle.innerHTML;
       // Hide and Reset the Vanity address input
-      document.getElementById('prefix').value = "";
-      document.getElementById('prefix').style.display = 'none';
+      domPrefix.value = "";
+      domPrefix.style.display = 'none';
       if (toggle === "Access My Wallet") {
         if (!hasEncryptedWallet()) {
           // No local wallet found
-            document.getElementById("generateWallet").style.display = 'none';
-            document.getElementById("importWallet").style.display = 'block';
-            document.getElementById("wToggle").innerHTML = "Create A New Wallet";
+            domGenerateWallet.style.display = 'none';
+            domImportWallet.style.display = 'block';
+            domWalletToggle.innerHTML = "Create A New Wallet";
             return;
         }
         // We have a local wallet! Display the decryption prompt
         decryptWallet().then(hasWallet => {
           if (hasWallet) {
-            document.getElementById("generateWallet").style.display = 'none';
-            document.getElementById("importWallet").style.display = 'block';
-            document.getElementById("wToggle").innerHTML = "Create A New Wallet";
+            hideAllWalletOptions();
           } else {
-            document.getElementById("generateWallet").style.display = 'block';
-            document.getElementById("importWallet").style.display = 'none';
-            document.getElementById("wToggle").innerHTML = "Access My Wallet";
+            domGenerateWallet.style.display = 'block';
+            domImportWallet.style.display = 'none';
+            domWalletToggle.innerHTML = "Access My Wallet";
           }
         }).catch(e => {
-          document.getElementById("generateWallet").style.display = 'none';
-          document.getElementById("importWallet").style.display = 'block';
-          document.getElementById("wToggle").innerHTML = "Create A New Wallet";
+          domGenerateWallet.style.display = 'none';
+          domImportWallet.style.display = 'block';
+          domWalletToggle.innerHTML = "Create A New Wallet";
         });
       } else {
-        document.getElementById("generateWallet").style.display = 'block';
-        document.getElementById("importWallet").style.display = 'none';
-        document.getElementById("wToggle").innerHTML = "Access My Wallet";
+        domGenerateWallet.style.display = 'block';
+        domImportWallet.style.display = 'none';
+        domWalletToggle.innerHTML = "Access My Wallet";
       }
     }
     let isVanityGenerating = false;
     const arrWorkers = [];
-    const vanUiButtonTxt = document.getElementById("vanButtonText");
     let vanUiUpdater;
 
     function stopSearch() {
@@ -736,8 +766,8 @@
         thread.terminate();
       }
       while (arrWorkers.length) arrWorkers.pop();
-      document.getElementById('prefix').disabled = false;
-      vanUiButtonTxt.innerText = 'Create A Vanity Wallet';
+      domPrefix.disabled = false;
+      domVanityUiButtonTxt.innerText = 'Create A Vanity Wallet';
       clearInterval(vanUiUpdater);
     }
 
@@ -745,24 +775,23 @@
       if (isVanityGenerating) return stopSearch();
       if (typeof(Worker) === "undefined") return alert('This browser doesn\'t support Web Workers (multi-threaded JS), unfortunately you cannot generate Vanity wallets!');
       // Generate a vanity address with the given prefix
-      let strPrefix = document.getElementById('prefix');
-      if (strPrefix.value.length === 0 || strPrefix.style.display === 'none') {
+      if (domPrefix.value.length === 0 || domPrefix.style.display === 'none') {
         // No prefix, display the intro!
-        strPrefix.style.display = 'block';
-        document.getElementById('genKeyWarning').style.display = 'none';
-        document.getElementById('PrivateTxt').innerHTML = "~";
-        document.getElementById('guiAddress').innerHTML = "~";
+        domPrefix.style.display = 'block';
+        domGenKeyWarning.style.display = 'none';
+        domPrivateTxt.innerHTML = "~";
+        domGuiAddress.innerHTML = "~";
       } else {
         // Ensure the input is base58 compatible
-        for (const char of strPrefix.value) {
+        for (const char of domPrefix.value) {
           if (!MAP.includes(char)) return alert("The character '" + char + "' is unsupported in addresses! (Not Base58 compatible)");
         }
         // We also don't want users to be mining addresses for years... so cap the letters to four until the generator is more optimized
-        if (strPrefix.value.length > 4) return alert("This is a long name! This would take a LONG time to find, please choose a shorter name!");
+        if (domPrefix.value.length > 4) return alert("This is a long name! This would take a LONG time to find, please choose a shorter name!");
         isVanityGenerating = true;
-        document.getElementById('prefix').disabled = true;
+        domPrefix.disabled = true;
         // Cache a lowercase equivilent for lower-entropy comparisons (a case-insensitive search is ALOT faster!) and strip accidental spaces
-        const nInsensitivePrefix = strPrefix.value.toLowerCase().replace(/ /g, "");
+        const nInsensitivePrefix = domPrefix.value.toLowerCase().replace(/ /g, "");
         const nPrefixLen = nInsensitivePrefix.length;
         let attempts = 0;
 
@@ -776,11 +805,11 @@
 
         // GUI Updater
         let lastAttempts = 0;
-        vanUiButtonTxt.innerText = 'Stop (Searched ' + attempts.toLocaleString('en-GB') + ' keys)';
+        domVanityUiButtonTxt.innerText = 'Stop (Searched ' + attempts.toLocaleString('en-GB') + ' keys)';
         vanUiUpdater = setInterval(() => {
           if (attempts > lastAttempts) {
             lastAttempts = attempts;
-            vanUiButtonTxt.innerText = 'Stop (Searched ' + attempts.toLocaleString('en-GB') + ' keys)';
+            domVanityUiButtonTxt.innerText = 'Stop (Searched ' + attempts.toLocaleString('en-GB') + ' keys)';
           }
         }, 200);
 
@@ -789,6 +818,8 @@
           if (data.pub.substr(0, nPrefixLen).toLowerCase() == nInsensitivePrefix) {
             importWallet(data.priv);
             stopSearch();
+            domGuiBalance.innerHTML = "0";
+            domGuiBalanceBox.style.fontSize = "x-large";
             return console.log("VANITY: Found an address after " + attempts + " attempts!");
           }
         }
@@ -802,24 +833,11 @@
         document.getElementById(id).style.display = 'block';
       }
     }
-    function startNetworkTest() {
-      if (networkEnabled) {
-        if (typeof publicKeyForNetwork !== 'undefined') {
-          checkPubKey(); //readout
-          document.getElementById("readout").style.display = 'block';
-          document.getElementById("networkingNotices").innerHTML = '';
-        } else {
-          document.getElementById("networkingNotices").innerHTML = 'No public key';
-        }
-      } else {
-        document.getElementById("networkingNotices").innerHTML = 'Network disabled';
-      }
-    }
     function loadUnspendInputs() {
       if (publicKeyForNetwork) {
         getUnspentTransactions();
-        document.getElementById("simpleTransactions").style.display = 'block';
-        document.getElementById("genIt").style.display = 'block';
+        domSimpleTXs.style.display = 'block';
+        domGenIt.style.display = 'block';
       } else {
         alert("You need a wallet to transact with! Please import a wallet via the 'Dashboard --> Access my wallet' menu");
       }
@@ -833,16 +851,15 @@
           alert("Please import/create your wallet before sending transactions!");
         return;
       }
-      let address = document.getElementById("address1s").value;
-      let value = Number(document.getElementById("value1s").value);
-      let genIt = document.getElementById("genIt");
-      if (genIt.innerHTML === 'Continue') {
-        genIt.innerHTML = 'Send Transaction';
-        document.getElementById("HumanReadable").innerHTML = "";
-        document.getElementById("value1s").value = "";
-        document.getElementById("address1s").value = "";
-        document.getElementById('reqDesc').value = '';
-        document.getElementById('reqDescDisplay').style.display = 'none';
+      let address = domAddress1s.value;
+      let value = Number(domValue1s.value);
+      if (domGenIt.innerHTML === 'Continue') {
+        domGenIt.innerHTML = 'Send Transaction';
+        domHumanReadable.innerHTML = "";
+        domValue1s.value = "";
+        domAddress1s.value = "";
+        domReqDesc.value = '';
+        domReqDisplay.style.display = 'none';
         return;
       }
       let nBalance = getBalance();
@@ -870,18 +887,17 @@
         totalSent = (parseFloat(fee) + parseFloat(value)).toFixed(8);
         valuechange = (parseFloat(txValue) - parseFloat(totalSent)).toFixed(8);
         if (totalSent <= balance) {
-          document.getElementById("HumanReadable").innerHTML = "Balance: " + balance.toFixed(8) + "<br>Fee: " + fee + "<br>To: " + address + "<br>Sent: " + value.toFixed(8) + "<br>Change Address: " + addresschange + "<br>Change: " + valuechange;
+          domHumanReadable.innerHTML = "Balance: " + balance.toFixed(8) + "<br>Fee: " + fee + "<br>To: " + address + "<br>Sent: " + value.toFixed(8) + "<br>Change Address: " + addresschange + "<br>Change: " + valuechange;
           trx.addoutput(addresschange, valuechange);//Change Address
           if (typeof privateKeyForTransactions !== 'undefined') {
-            var wif = privateKeyForTransactions;
-            sendTransaction(trx.sign(wif, 1));
-            genIt.innerHTML = "Continue";
+            sendTransaction(trx.sign(privateKeyForTransactions, 1));
+            domGenIt.innerHTML = "Continue";
           } else {
             console.log("No private key");
           }
         } else {
           console.warn("Amount: " + value + "\nFee: " + fee + "\nChange: " + valuechange + "\nTOTAL: " + totalSent);
-          document.getElementById("HumanReadable").innerHTML = "You are trying to send more than you have!";
+          domHumanReadable.innerHTML = "You are trying to send more than you have!";
         }
       } else {
         console.log("No address or value");
@@ -919,20 +935,20 @@
         evt.currentTarget.className += " active";
 
       // Close the navbar if it's not already closed
-      if (!document.getElementById("navbarToggler").className.includes("collapsed"))
-        document.getElementById("navbarToggler").click();
+      if (!domNavbarToggler.className.includes("collapsed"))
+        domNavbarToggler.click();
     }
-    document.getElementById("start").click();
+    domStart.click();
 
     function refreshChainData() {
       // If in offline mode: don't sync ANY data or connect to the internet
       if (!networkEnabled) return console.warn("Offline mode: For your security, the wallet will avoid ALL internet requests in offline mode.");
 
       // Update identicon
-      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+      domIdenticon.dataset.jdenticonValue = publicKeyForNetwork;
       jdenticon();
       // Play reload anim
-      document.getElementById("balanceReload").className += " playAnim";
+      domBalanceReload.className += " playAnim";
       // Fetch block count + UTXOs
       getBlockCount();
     }
@@ -947,19 +963,19 @@
       // Configure payment processor
       if (requestTo && requestAmount) {
         // Open 'Create Transaction' menu
-        document.getElementById('txTab').click();
-        if (document.getElementById("simpleTransactions").style.display === 'none')
-          document.getElementById("simpleTransactionsDropdown").click();
+        domTxTab.click();
+        if (domSimpleTXs.style.display === 'none')
+          domSimpleTXsDropdown.click();
         // Pre-fill inputs
-        document.getElementById('address1s').value = requestTo;
-        document.getElementById('value1s').value  = requestAmount;
+        domAddress1s.value = requestTo;
+        domValue1s.value   = requestAmount;
         // Payment request 'desc' is optional
         if (urlParams.has('desc')) {
-          document.getElementById('reqDescDisplay').style.display = 'block';
-          document.getElementById('reqDesc').value = urlParams.get('desc');
+          domReqDisplay.style.display = 'block';
+          domReqDesc.value = urlParams.get('desc');
         } else {
-          document.getElementById('reqDesc').value = '';
-          document.getElementById('reqDescDisplay').style.display = 'none';
+          domReqDesc.value = '';
+          domReqDisplay.style.display = 'none';
         }
       }
     });

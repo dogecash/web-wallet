@@ -70,11 +70,10 @@ importWallet = function (newWif = false) {
   if (walletConfirm) {
     walletAlreadyMade++;
     // Wallet Import Format to Private Key
-    const privkeyWIF = newWif || document.getElementById("privateKey").value;
+    const privkeyWIF = newWif || domPrivKey.value;
     privateKeyForTransactions = privkeyWIF;
     if (!newWif) {
-      document.getElementById("privateKey").value = "";
-      toggleWallet();
+      domPrivKey.value = "";
     }
     const byteArryConvert = from_b58(privkeyWIF);
     const droplfour = byteArryConvert.slice(0, byteArryConvert.length - 4);
@@ -113,10 +112,10 @@ importWallet = function (newWif = false) {
     publicKeyForNetwork = to_b58(Crypto.util.hexToBytes(pubKeyPreBase));
 
     // Display Text
-    document.getElementById('guiAddress').innerHTML = publicKeyForNetwork;
-    document.getElementById('guiWallet').style.display = 'block';
-    document.getElementById('PrivateTxt').value = privkeyWIF;
-    document.getElementById('guiAddress').innerHTML = publicKeyForNetwork;
+    domGuiAddress.innerHTML = publicKeyForNetwork;
+    domGuiWallet.style.display = 'block';
+    domPrivateTxt.value = privkeyWIF;
+    domGuiAddress.innerHTML = publicKeyForNetwork;
 
     // QR Codes
     // Private Key
@@ -125,24 +124,21 @@ importWallet = function (newWif = false) {
     const qrPriv = qrcode(typeNumber, errorCorrectionLevel);
     qrPriv.addData(privkeyWIF);
     qrPriv.make();
-    const qrPrivDOM = document.getElementById('PrivateQR');
-    qrPrivDOM.innerHTML = qrPriv.createImgTag();
-    qrPrivDOM.firstChild.style.borderRadius = '8px';
+    domPrivateQr.innerHTML = qrPriv.createImgTag();
+    domPrivateQr.firstChild.style.borderRadius = '8px';
 
     // Public Key
     const qrPub = qrcode(typeNumber, errorCorrectionLevel);
     qrPub.addData(publicKeyForNetwork);
     qrPub.make();
-    const qrPubDOM = document.getElementById('PublicQR');
-    qrPubDOM.innerHTML = qrPub.createImgTag();
-    qrPubDOM.firstChild.style.borderRadius = '8px';
+    domPublicQr.innerHTML = qrPub.createImgTag();
+    domPublicQr.firstChild.style.borderRadius = '8px';
     // Pubkey Modal
-    document.getElementById('ModalQRLabel').innerHTML = 'pivx:' + publicKeyForNetwork;
-    const modalQR = document.getElementById('ModalQR');
-    modalQR.innerHTML = qrPub.createImgTag();
-    modalQR.firstChild.style.width = "100%";
-    modalQR.firstChild.style.height = "auto";
-    modalQR.firstChild.style.imageRendering = "crisp-edges";
+    domModalQrLabel.innerHTML = 'pivx:' + publicKeyForNetwork;
+    domModalQR.innerHTML = qrPub.createImgTag();
+    domModalQR.firstChild.style.width = "100%";
+    domModalQR.firstChild.style.height = "auto";
+    domModalQR.firstChild.style.imageRendering = "crisp-edges";
     document.getElementById('clipboard').value = publicKeyForNetwork;
 
     // Set view key as public and refresh QR code
@@ -150,12 +146,12 @@ importWallet = function (newWif = false) {
     toggleKeyView();
 
     // Update identicon
-    document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+    domIdenticon.dataset.jdenticonValue = publicKeyForNetwork;
     jdenticon();
 
     if (!newWif) {
         // Hide the encryption warning
-      document.getElementById('genKeyWarning').style.display = 'block';
+      domGenKeyWarning.style.display = 'block';
     }
     // Load UTXOs from explorer
     if (networkEnabled)
@@ -262,12 +258,12 @@ generateWallet = async function (strPrefix = false) {
     }
     if (strPrefix === false || (strPrefix !== false && publicKeyForNetwork.toLowerCase().startsWith(strPrefix))) {
       // Display Text
-      document.getElementById('genKeyWarning').style.display = 'block';
-      document.getElementById('PrivateTxt').value = privateKeyForTransactions;
-      document.getElementById('guiAddress').innerHTML = publicKeyForNetwork;
+      domGenKeyWarning.style.display = 'block';
+      domPrivateTxt.value = privateKeyForTransactions;
+      domGuiAddress.innerHTML = publicKeyForNetwork;
       // New address... so there definitely won't be a balance
-      document.getElementById('guiBalance').innerHTML = "0";
-      document.getElementById('guiBalanceBox').style.fontSize = "x-large";
+      domGuiBalance.innerHTML = "0";
+      domGuiBalanceBox.style.fontSize = "x-large";
 
       // QR Codes
       const typeNumber = 4;
@@ -275,30 +271,27 @@ generateWallet = async function (strPrefix = false) {
       const qrPriv = qrcode(typeNumber, errorCorrectionLevel);
       qrPriv.addData('pivx:' + privateKeyForTransactions);
       qrPriv.make();
-      const qrPrivDOM = document.getElementById('PrivateQR');
-      qrPrivDOM.innerHTML = qrPriv.createImgTag();
-      qrPrivDOM.firstChild.style.borderRadius = '8px';
+      domPrivateQr.innerHTML = qrPriv.createImgTag();
+      domPrivateQr.firstChild.style.borderRadius = '8px';
 
       const qrPub = qrcode(typeNumber, errorCorrectionLevel);
       qrPub.addData('pivx:' + publicKeyForNetwork);
       qrPub.make();
-      const qrPubDOM = document.getElementById('PublicQR');
-      qrPubDOM.innerHTML = qrPub.createImgTag();
-      qrPubDOM.style.display = 'block';
-      qrPubDOM.firstChild.style.borderRadius = '8px';
-      document.getElementById('ModalQRLabel').innerHTML = 'pivx:' + publicKeyForNetwork;
-      const modalQR = document.getElementById('ModalQR');
-      modalQR.innerHTML = qrPub.createImgTag();
-      modalQR.firstChild.style.width = "100%";
-      modalQR.firstChild.style.height = "auto";
-      modalQR.firstChild.style.imageRendering = "crisp-edges";
+      domPublicQr.innerHTML = qrPub.createImgTag();
+      domPublicQr.style.display = 'block';
+      domPublicQr.firstChild.style.borderRadius = '8px';
+      domModalQrLabel.innerHTML = 'pivx:' + publicKeyForNetwork;
+      domModalQR.innerHTML = qrPub.createImgTag();
+      domModalQR.firstChild.style.width = "100%";
+      domModalQR.firstChild.style.height = "auto";
+      domModalQR.firstChild.style.imageRendering = "crisp-edges";
       document.getElementById('clipboard').value = publicKeyForNetwork;
 
       // Update identicon
-      document.getElementById("identicon").dataset.jdenticonValue = publicKeyForNetwork;
+      domIdenticon.dataset.jdenticonValue = publicKeyForNetwork;
       jdenticon();
       
-      document.getElementById('guiWallet').style.display = 'block';
+      domGuiWallet.style.display = 'block';
       viewPrivKey = false;
 
       hideAllWalletOptions();
@@ -318,7 +311,7 @@ encryptWallet = async function () {
   // Set the encrypted wallet in localStorage
   localStorage.setItem("encwif", encWIF);
   // Hide the encryption warning
-  document.getElementById('genKeyWarning').style.display = 'none';
+  domGenKeyWarning.style.display = 'none';
 }
 
 decryptWallet = async function () {
