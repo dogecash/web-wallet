@@ -1,6 +1,6 @@
 (function () {
 
-	var bitjs = window.bitjs = function () { };
+	var bitjs = (typeof window === "undefined" ? self : window).bitjs = function () { };
 
 	/* public vars */
 	bitjs.pub  = PUBKEY_ADDRESS.toString(16);
