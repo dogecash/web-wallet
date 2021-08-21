@@ -721,14 +721,8 @@
       // Loosely check if the vanity address is valid
       if (!domPrefix.value.length) return domPrefix.value = PUBKEY_PREFIX;
       if (!domPrefix.value.startsWith(PUBKEY_PREFIX)) {
-        // Prefix doesnt match, check if it's lowercased
-        if (domPrefix.value[0] === PUBKEY_PREFIX.toLowerCase()) {
-          // It's lowercase! Convert to uppercase and we're good to go!
-          domPrefix.value = PUBKEY_PREFIX + domPrefix.value.substr(1);
-        } else {
-          // Doesn't match at all, so clear the input!
-          domPrefix.value = PUBKEY_PREFIX;
-        }
+        // Prefix doesnt match, splice it into the string
+        domPrefix.value = PUBKEY_PREFIX + domPrefix.value.substr(1);
       }
     }
 
