@@ -47,7 +47,7 @@
       const PUBKEY_ADDRESS = 30;
       const SECRET_KEY     = 212;
 
-
+      const COIN = 1e8;
 
       // Cool stuff
       const donationAddress = "DBs22sfKRHtuWLxPPtXNyjYMcSQ6scihco";
@@ -627,21 +627,16 @@
     const domPrivKey = document.getElementById("privateKey");
 
     function getBalance(updateGUI = false) {
-      let nBalance = 0;
-      for (const nUTXO of cachedUTXOs) {
-        // Calculate the balance from our UTXO cache
-        console.log(nUTXO.value / 100000000);
-        nBalance += Number((nUTXO.value / 100000000).toFixed(8));
-      }
+      let nBalance = cachedUTXOs.reduce((a, b) => a.value + b.value);
 
       // Update the GUI too, if chosen
       if (updateGUI) {
         // Set the balance, and adjust font-size for large balance strings
-        domGuiBalance.innerHTML = nBalance;
-        domGuiBalanceBox.style.fontSize = nBalance.toString().length > 8 ? "large" : "x-large";
+        domGuiBalance.innerText = nBalance / COIN;
+        domGuiBalanceBox.style.fontSize = (nBalance / COIN).toString().length > 8 ? "large" : "x-large";
       }
 
-      return Number(nBalance.toFixed(8));
+      return nBalance;
     }
 
     // URL-Query request processing
@@ -862,7 +857,7 @@
         domReqDisplay.style.display = 'none';
         return;
       }
-      let nBalance = getBalance();
+      let nBalance = getBalance() / COIN;
       if (value > nBalance) return alert("Balance is too small! (" + nBalance + " - " + value + " = " + (nBalance - value).toFixed(8) + ")");
       console.log("Constructing TX of value: " + value + " PIV");
       // Loop our cached UTXOs and construct a TX
@@ -875,20 +870,19 @@
           break;
         }
         trx.addinput(UTXO.tx_hash, UTXO.tx_ouput_n, UTXO.script);
-        txValue += Number((UTXO.value / 100000000).toFixed(8));
-        txValue = Number(txValue.toFixed(8));
-        console.log("Coin Control: Selected input " + UTXO.tx_hash.substr(0, 6) + "(" + UTXO.tx_ouput_n + ")... (Added " + (UTXO.value / 100000000).toFixed(8) + " PIV - Total: " + txValue + ")");
+        txValue += UTXO.value / COIN;
+        console.log("Coin Control: Selected input " + UTXO.tx_hash.substr(0, 6) + "(" + UTXO.tx_ouput_n + ")... (Added " + (UTXO.value / COIN).toFixed(8) + " PIV - Total: " + txValue + ")");
       }
 
       if (address != '' && value != '') {
         calculatefee(trx.serialize().length);
-        trx.addoutput(address, value);//Sending to this address
+        trx.addoutput(address, value); //Sending to this address
         addresschange = publicKeyForNetwork;
         totalSent = (parseFloat(fee) + parseFloat(value)).toFixed(8);
         valuechange = (parseFloat(txValue) - parseFloat(totalSent)).toFixed(8);
-        if (totalSent <= balance) {
-          domHumanReadable.innerHTML = "Balance: " + balance.toFixed(8) + "<br>Fee: " + fee + "<br>To: " + address + "<br>Sent: " + value.toFixed(8) + "<br>Change Address: " + addresschange + "<br>Change: " + valuechange;
-          trx.addoutput(addresschange, valuechange);//Change Address
+        if (totalSent <= nBalance) {
+          domHumanReadable.innerHTML = "Balance: " + nBalance.toFixed(8) + "<br>Fee: " + fee + "<br>To: " + address + "<br>Sent: " + value + "<br>Change Address: " + addresschange + "<br>Change: " + valuechange;
+          trx.addoutput(addresschange, valuechange); //Change Address
           if (typeof privateKeyForTransactions !== 'undefined') {
             sendTransaction(trx.sign(privateKeyForTransactions, 1));
             domGenIt.innerHTML = "Continue";

@@ -37,14 +37,13 @@ if (networkEnabled) {
             cachedUTXOs.push(data.unspent_outputs[i]);
           }
           // Update the GUI with the newly cached UTXO set
-          balance = getBalance(true);
+          getBalance(true);
         } else {
           //Temporary message for when there are alot of inputs
           //Probably use change all of this to using websockets will work better
           document.getElementById("errorNotice").innerHTML = '<div class="alert alert-danger" role="alert"><h4>Note:</h4><h5>This address has over 1000 UTXOs, which may be problematic for the wallet to handle, transact with caution!</h5></div>';
         }
       }
-      console.log('Total Balance:' + balance);
     }
     request.send()
   }
@@ -76,7 +75,7 @@ if (networkEnabled) {
   }
   var calculatefee = function (bytes) {
     // TEMPORARY: Hardcoded fee per-byte
-    fee = Number(((bytes * 250) / 100000000).toFixed(8)); // 250 sat/byte
+    fee = Number(((bytes * 250) / COIN).toFixed(8)); // 250 sat/byte
 
     /*var request = new XMLHttpRequest()
     request.open('GET', url + '/api/v1/estimatefee/10', false)
