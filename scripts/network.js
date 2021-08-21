@@ -7,8 +7,6 @@ if (networkEnabled) {
     request.onload = function () {
       let data = Number(this.response);
       // If the block count has changed, refresh all of our data!
-      let reloader = document.getElementById("balanceReload");
-      reloader.className = reloader.className.replace(/ playAnim/g, "");
       if (data > cachedBlockCount) {
         console.log("New block detected! " + cachedBlockCount + " --> " + data);
         if (publicKeyForNetwork)
@@ -20,21 +18,29 @@ if (networkEnabled) {
   }
   var getUnspentTransactions = function () {
     var request = new XMLHttpRequest()
-    request.open('GET', "https://chainz.cryptoid.info/pivx/api.dws?q=unspent&active=" + publicKeyForNetwork + "&key=fb4fd0981734", true)
+    request.open('GET', "https://api2.dogecash.org/unspent/" + publicKeyForNetwork, true)
     request.onload = function () {
-      data = JSON.parse(this.response)
-      if (!data.unspent_outputs || data.unspent_outputs.length === 0) {
+      data = JSON.parse(this.response);
+      // Stop the loading spinner
+      let reloader = document.getElementById("balanceReload");
+      reloader.className = reloader.className.replace(/ playAnim/g, "");
+      if (!data.result || data.result.length === 0) {
         console.log('No unspent Transactions');
         document.getElementById("errorNotice").innerHTML = '<div class="alert alert-danger" role="alert"><h4>Note:</h4><h5>You don\'t have any funds, get some coins first!</h5></div>';
         cachedUTXOs = [];
       } else {
         cachedUTXOs = [];
-        amountOfTransactions = data.unspent_outputs.length;
+        amountOfTransactions = data.result.length;
         if (amountOfTransactions > 0)
           document.getElementById("errorNotice").innerHTML = '';
         if (amountOfTransactions <= 1000) {
           for (i = 0; i < amountOfTransactions; i++) {
-            cachedUTXOs.push(data.unspent_outputs[i]);
+            cachedUTXOs.push({
+              'id': data.result[i].txid,
+              'index': data.result[i].index,
+              'script': data.result[i].script,
+              'value': data.result[i].value
+            });
           }
           // Update the GUI with the newly cached UTXO set
           getBalance(true);
@@ -49,26 +55,27 @@ if (networkEnabled) {
   }
   var sendTransaction = function (hex) {
     if (typeof hex !== 'undefined') {
-      var request = new XMLHttpRequest()
-      request.open('GET', 'https://stakecubecoin.net/pivx/submittx?tx=' + hex, true)
+      var request = new XMLHttpRequest();
+      request.open('POST', 'https://api2.dogecash.org/broadcast', true);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       request.onload = function () {
-        data = this.response;
-        if (data.length === 64) {
+        data = JSON.parse(this.response);
+        if (data.result && data.result.length === 64) {
           console.log('Transaction sent! ' + data);
           if (domAddress1s.value !== donationAddress)
-            document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Transaction sent! ' + data + '</h4>');
+            document.getElementById("transactionFinal").innerHTML = ('<br><h4 style="color:green">Transaction sent! ' + data.result + '</h4>');
           else
-            document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:green">Thank you for supporting MyPIVXWallet! 💜💜💜<br>' + data + '</h4>');
+            document.getElementById("transactionFinal").innerHTML = ('<br><h4 style="color:green">Thank you for supporting MyDOGECWallet! 💜💜💜<br>' + data + '</h4>');
           domSimpleTXs.style.display = 'none';
           domAddress1s.value = '';
           domValue1s.innerHTML = '';
         } else {
           console.log('Error sending transaction: ' + data);
-          document.getElementById("transactionFinal").innerHTML = ('<h4 style="color:red">Error sending transaction: ' + data + "</h4>");
+          document.getElementById("transactionFinal").innerHTML = ('<br><h4 style="color:red">Error sending transaction: ' + data.error.message + "</h4>");
         }
       }
 
-      request.send()
+      request.send('raw=' + hex);
     } else {
       console.log("hex undefined");
     }

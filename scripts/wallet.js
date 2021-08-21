@@ -59,7 +59,7 @@ var randArr = new Uint8Array(32) //create a typed array of 32 bytes (256 bits)
 if (debug) {
   document.getElementById('Debug').innerHTML = "<b> DEBUG MODE </b>";
 }
-document.getElementById('dcfooter').innerHTML = '© MIT 2021 - Built with 💜 by PIVX Labs - <b style=\'cursor:pointer\' onclick=\'openDonatePage()\'>Donate!</b><br><a href="https://github.com/PIVX-Labs/MyPIVXWallet">MyPIVXWallet - v' + wallet_version + '</a>';
+document.getElementById('dcfooter').innerHTML = '© MIT 2021 - Built with 💛 by the DogeCash Core Team - <b style=\'cursor:pointer\' onclick=\'openDonatePage()\'>Donate!</b><br><a href="https://github.com/dogecash/web-wallet">My DOGEC Wallet - v' + wallet_version + '</a>';
 // Wallet Import
 importWallet = function (newWif = false) {
   if (walletAlreadyMade != 0) {
@@ -134,7 +134,7 @@ importWallet = function (newWif = false) {
     domPublicQr.innerHTML = qrPub.createImgTag();
     domPublicQr.firstChild.style.borderRadius = '8px';
     // Pubkey Modal
-    domModalQrLabel.innerHTML = 'pivx:' + publicKeyForNetwork;
+    domModalQrLabel.innerHTML = 'dogecash:' + publicKeyForNetwork;
     domModalQR.innerHTML = qrPub.createImgTag();
     domModalQR.firstChild.style.width = "100%";
     domModalQR.firstChild.style.height = "auto";
@@ -269,18 +269,18 @@ generateWallet = async function (strPrefix = false) {
       const typeNumber = 4;
       const errorCorrectionLevel = 'L';
       const qrPriv = qrcode(typeNumber, errorCorrectionLevel);
-      qrPriv.addData('pivx:' + privateKeyForTransactions);
+      qrPriv.addData('dogecash:' + privateKeyForTransactions);
       qrPriv.make();
       domPrivateQr.innerHTML = qrPriv.createImgTag();
       domPrivateQr.firstChild.style.borderRadius = '8px';
 
       const qrPub = qrcode(typeNumber, errorCorrectionLevel);
-      qrPub.addData('pivx:' + publicKeyForNetwork);
+      qrPub.addData('dogecash:' + publicKeyForNetwork);
       qrPub.make();
       domPublicQr.innerHTML = qrPub.createImgTag();
       domPublicQr.style.display = 'block';
       domPublicQr.firstChild.style.borderRadius = '8px';
-      domModalQrLabel.innerHTML = 'pivx:' + publicKeyForNetwork;
+      domModalQrLabel.innerHTML = 'dogecash:' + publicKeyForNetwork;
       domModalQR.innerHTML = qrPub.createImgTag();
       domModalQR.firstChild.style.width = "100%";
       domModalQR.firstChild.style.height = "auto";
