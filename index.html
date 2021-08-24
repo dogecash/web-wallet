@@ -769,7 +769,7 @@
         function checkResult(data) {
           attempts++;
           if (data.pub.substr(0, nPrefixLen).toLowerCase() == nInsensitivePrefix) {
-            importWallet(data.priv);
+            importWallet(data.priv, true);
             stopSearch();
             domGuiBalance.innerHTML = "0";
             domGuiBalanceBox.style.fontSize = "x-large";
