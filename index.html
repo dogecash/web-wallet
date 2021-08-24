@@ -346,7 +346,7 @@
                   <div class="col-md-12 dashboard-title">
                     <h3 class="dogec-bold-title" style="font-size:38px;"><span>Create a new</span>Vanity Wallet</h3>
                     <span class="badge badge-warning">Experimental</span></h1>
-                    <p>This will create a DogeCash wallet with a customized prefix of your choosing, requiring more processing power to generate such addresses, it is recommended to generate a prefix of less than 4 characters, for example: "DAD" is a possible address prefix.</p>
+                    <p>This will create a DogeCash wallet with a customized prefix of your choosing, requiring more processing power to generate such addresses, it is recommended to generate a prefix of less than 5 characters, for example: "DAD" is a possible address prefix.</p>
                   </div>
 
 
@@ -740,7 +740,7 @@
           if (!MAP.includes(char)) return alert("The character '" + char + "' is unsupported in addresses! (Not Base58 compatible)");
         }
         // We also don't want users to be mining addresses for years... so cap the letters to four until the generator is more optimized
-        if (domPrefix.value.length > 4) return alert("This is a long name! This would take a LONG time to find, please choose a shorter name!");
+        if (domPrefix.value.length > 5) return alert("This is a long name! This would take a LONG time to find, please choose a shorter name!");
         isVanityGenerating = true;
         domPrefix.disabled = true;
         // Cache a lowercase equivilent for lower-entropy comparisons (a case-insensitive search is ALOT faster!) and strip accidental spaces
